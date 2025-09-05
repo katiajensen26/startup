@@ -1,4 +1,8 @@
-# CS 260 Notes - This is my practice notes
+# CS 260 Notes
+
+#First Notes
+
+I learned a lot about how git works and how to work with it in the terminal. I am definitely going to need to practice but I know I will understand it better as I go along.
 
 [My startup - Simon](https://simon.cs260.click)
 
