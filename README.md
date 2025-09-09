@@ -43,9 +43,10 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Secure login over HTTPS
+- Ability to customize and add books to your shelf
+- Shows books on a bookshelf for easy viewing
+- 
 
 ### Technologies
 
