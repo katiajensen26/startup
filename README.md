@@ -26,7 +26,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 ### Elevator pitch
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+It can be exciting to put together a book collection and show off the books you enjoy. However, it is not always easy to share your collection in a way that is personal and shareable. My website allows you to design custom book covers and arrange them on a virtual shelf. You can show off what you’ve read, what you want to read, or a mix of both in a unique and personal display. This fun and interactive platform gives readers a creative way to showcase their taste and share it with their friends.
 
 ### Design
 
@@ -38,7 +38,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 sequenceDiagram
     actor You
     actor Website
+    actor Server
     You->>Website: Replace this with your design
+    Website->>Server: This is just a test.
 ```
 
 ### Key features
