@@ -58,13 +58,15 @@ sequenceDiagram
 I am going to use the required technologies in the following ways.
 
 - **HTML** - Uses correct HTML structure for application. Three HTML pages. One for login, one to display bookshelf and one to customize your book.
-- **CSS** - Application styling to look good on different screen sizes, uses good whitespace and neutral colors so the book colors don't clash with the background.
-- **React** - Provides login, bookshelf display, interactive book customization, use of React to share bookshelf with others
+- **CSS** - Application styling to look good on different screen sizes, uses good whitespace and neutral colors so the book covers stand out.
+- **React** - Provides login, bookshelf display, interactive book customization, sharing bookshelf with others.
 - **Service** - Backend service with endpoints for:
-    - login
-    - test
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+    - Adding books
+    - Removing books
+    - Creating a shareable link
+    - Register, login, and logout users.
+- **DB/Login** - Store users, bookshelf and books in database. Register and login users. Credentials stored in secure database. Can't create bookshelf without authentication.
+- **WebSocket** - As books are added, the bookshelf updates in real time.
 
 ## 🚀 AWS deliverable
 
