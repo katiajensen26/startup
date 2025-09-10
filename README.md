@@ -36,13 +36,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 
 ```mermaid
 sequenceDiagram
-    actor You
+    actor User
     actor Website
     actor Server
-    You->>Website: Adds book and customizes it as wanted
+    User->>Website: Adds book and customizes it as wanted
     Website->>Server: Adds book to server
-    Server<<-Website: Returns updated shelf
-    Website<<-You: Shows new book on shelf
+    Server-->>Website: Returns updated shelf
+    Website-->>User: Shows new book on shelf
 ```
 
 ### Key features
