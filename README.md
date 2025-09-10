@@ -32,7 +32,7 @@ It can be exciting to put together a book collection and show off the books you 
 
 ![Design image](placeholder.png)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+This shows how the user interacts with the website and server to add a book to their shelf.
 
 ```mermaid
 sequenceDiagram
@@ -48,8 +48,10 @@ sequenceDiagram
 ### Key features
 
 - Secure login over HTTPS
-- Ability to customize and add books to your shelf
-- Shows books on a bookshelf for easy viewing
+- Displays bookshelf of created books.
+- Allows the customization of color and design of book spine.
+- Ability for user to pick what shelf to add it to.
+- Allows the user to share their bookshelf with others.
 
 ### Technologies
 
