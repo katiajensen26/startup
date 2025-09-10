@@ -57,10 +57,12 @@ sequenceDiagram
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
+- **HTML** - Uses correct HTML structure for application. Three HTML pages. One for login, one to display bookshelf and one to customize your book.
+- **CSS** - Application styling to look good on different screen sizes, uses good whitespace and neutral colors so the book colors don't clash with the background.
+- **React** - Provides login, bookshelf display, interactive book customization, use of React to share bookshelf with others
+- **Service** - Backend service with endpoints for:
+    - login
+    - test
 - **DB/Login** - Description here
 - **WebSocket** - Description here
 
