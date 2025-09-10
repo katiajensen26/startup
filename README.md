@@ -39,8 +39,10 @@ sequenceDiagram
     actor You
     actor Website
     actor Server
-    You->>Website: Replace this with your design
-    Website->>Server: This is just a test.
+    You->>Website: Adds book and customizes it as wanted
+    Website->>Server: Adds book to server
+    Server<<-Website: Returns updated shelf
+    Website<<-You: Shows new book on shelf
 ```
 
 ### Key features
