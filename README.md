@@ -1,4 +1,4 @@
-# Your startup name here
+# Bookscape
 
 [My Notes](notes.md)
 
