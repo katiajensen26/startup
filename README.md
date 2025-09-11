@@ -1,4 +1,4 @@
-# Bookscape
+# My Bookshelf
 
 [My Notes](notes.md)
 
@@ -30,7 +30,10 @@ It can be exciting to put together a book collection and show off the books you 
 
 ### Design
 
-![Design image](placeholder.png)
+![Login Design](LoginPageStartup.jpg)
+![Bookshelf Design](BookshelfPageStartup.jpg)
+![Customizer Design](CustomizePageStartup.jpg)
+
 
 This shows how the user interacts with the website and server to add a book to their shelf.
 
