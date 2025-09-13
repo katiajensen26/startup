@@ -14,8 +14,12 @@ I learned a lot about how git works and how to work with it in the terminal. I a
 
 ## AWS
 
-My IP address is: 54.81.96.130
-Launching my AMI I initially put it on a private subnet. Even though it had a public IP address and the security group was right, I wasn't able to connect to it.
+My IP address is: 54.87.252.47
+My elastic IP address is: 34.194.183.253
+I launched my AMI and learned about how to ssh into it. The command to do it is 
+```
+ssh -i [key pair file] ubuntu@[ip address]
+```
 
 ## Caddy
 
