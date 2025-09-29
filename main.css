@@ -2,11 +2,15 @@ body {
     display: flex;
     flex-direction: column;
     min-width: 375px;
+    background-color: #cfeef9 !important;
 }
 
 header {
     flex: 0 80px;
     text-align: center;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
 main {
