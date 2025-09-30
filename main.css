@@ -12,7 +12,7 @@ header {
     justify-content: center;
     align-items: center;
     display: flex;
-    background-color: #082643 !important;
+    background-color: #3b8abe !important;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -55,8 +55,34 @@ menu .nav-item {
     color: rgb(196, 196, 196) !important;
 }
 
+button.login-btn {
+    background-color: #3b8abe;
+    border: none;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+button.custom-btn {
+    background-color: #4cafef;
+    border: none;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
 footer {
-    background-color: #082643 !important;
+    background-color: #3b8abe !important;
     color: white !important;
     padding: 0.3em;
     font-family: 'Montserrat', sans-serif;
