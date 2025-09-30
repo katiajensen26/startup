@@ -11,6 +11,8 @@ header {
     justify-content: center;
     align-items: center;
     display: flex;
+    background-color: #082643 !important;
+    
 }
 
 main {
@@ -34,11 +36,27 @@ menu {
 
 .navbar-brand {
     padding-left: 0.3em;
-    border-bottom: solid white thin;
+    border-bottom: solid white thin;    
+    color: white !important;
 }
 
 menu .nav-item {
     padding: 0 0.3em;
+    color: white !important;
+}
+
+.navbar .nav-link {
+    color: white !important;
+}
+
+.navbar .nav-link.active {
+    color: rgb(196, 196, 196) !important;
+}
+
+footer {
+    background-color: #082643 !important;
+    color: white !important;
+    padding: 0.3em;
 }
 
 footer a {
