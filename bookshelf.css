@@ -39,3 +39,9 @@ svg {
     margin: 1em 0;
     width: 100%;
 }
+
+.center-form {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
