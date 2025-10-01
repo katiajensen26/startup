@@ -44,6 +44,18 @@ main.friends-page {
     width: 100%;
 }
 
+main.customize-page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: 'Fredoka', sans-serif;
+    text-align: center;
+    margin: 1em;
+    width: 100%;
+}
+
 footer {
     flex: 0 30px;
 }
