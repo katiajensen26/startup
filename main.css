@@ -4,7 +4,9 @@ body {
     min-width: 375px;
     background-color: #cfeef9 !important;
     font-family: 'Fredoka', sans-serif;
+    min-height: 100vh;
 }
+
 
 header {
     flex: 0 80px;
@@ -28,6 +30,18 @@ main {
     align-items: center;
     justify-content: space-around;
     font-family: 'Fredoka', sans-serif;
+}
+
+main.friends-page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fredoka', sans-serif;
+    text-align: center;
+    margin: 1em;
+    width: 100%;
 }
 
 footer {
