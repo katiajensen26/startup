@@ -10,3 +10,32 @@ button.custom-btn {
     cursor: pointer;
     border-radius: 12px;
 }
+
+.book-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    fill: white;
+    text-anchor: middle;
+    cursor: pointer;
+    text-decoration: none;
+    stroke: none;
+}
+
+a text {
+    text-decoration: none;
+    stroke: none;
+    fill: white;
+}
+
+svg {
+    width: 90%;
+    height: auto;
+    max-width: 700px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin: 1em 0;
+    width: 100%;
+}
