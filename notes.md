@@ -29,7 +29,7 @@ No problems worked just like it said in the [instruction](https://github.com/web
 
 I learned a lot about HTML. I just need to work on getting better at remembering all of the different tags and what they do.
 
-This is how you deploy files so your website actually shows up like you want it to:
+This is how you deploy files so your website actually shows up like you want it to. You HAVE to make sure you are in the right folder for it to work.
 
 ```
 ./deployFiles.sh -k C:/Users/katia/cs260/MyPair.pem -h mybookshelf260.click -s startup
