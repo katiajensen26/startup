@@ -11,3 +11,22 @@ label, input[type="text"] {
     text-align: center;
     margin: 0 auto;
 }
+
+.book-title {
+    font-family: 'Merriweather', serif;
+    font-size: 80px;
+    fill: #fcf9eb;
+    text-anchor: middle;
+}
+
+.book-author {
+    font-family: 'Merriweather', serif;
+    font-size: 25px;
+    fill: #fcf9eb;
+    text-anchor: middle;
+}
+
+.book-style-btn {
+
+    cursor: pointer;
+}
