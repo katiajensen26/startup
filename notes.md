@@ -29,49 +29,40 @@ No problems worked just like it said in the [instruction](https://github.com/web
 
 I learned a lot about HTML. I just need to work on getting better at remembering all of the different tags and what they do.
 
-## CSS
+This is how you deploy files so your website actually shows up like you want it to:
 
-This took a couple hours to get it how I wanted. It was important to make it responsive and Bootstrap helped with that. It looks great on all kinds of screen sizes.
-
-Bootstrap seems a bit like magic. It styles things nicely, but is very opinionated. You either do, or you do not. There doesn't seem to be much in between.
-
-I did like the navbar it made it super easy to build a responsive header.
-
-```html
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand">
-            <img src="logo.svg" width="30" height="30" class="d-inline-block align-top" alt="" />
-            Calmer
-          </a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" href="play.html">Play</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="about.html">About</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="index.html">Logout</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </header>
+```
+./deployFiles.sh -k C:/Users/katia/cs260/MyPair.pem -h mybookshelf260.click -s startup
 ```
 
-I also used SVG to make the icon and logo for the app. This turned out to be a piece of cake.
+## CSS
+
+This took a lot longer than I expected and I learned a lot about how styling works and how you get everything to stick where you want it to. I had a hard time centering the svg elements on my webpages but I figured it out and now everything scales nicely to all screen sizes.
+
+I tried using bootstrap at first but I ended up replacing most of the elements anyways since I found I prefer more control over the elements on the page.
+I had a lot of fun finding different fonts and trying out different colors for what I wanted the webpage to look like but I am very happy with it so far and can't wait to add more interactive elements to it with React.
+
+I did use the simon navigation bar as a template but I altered it slightly so that my navigation bar would be more centered with the rest of my things as it felt like that fit better for my style of website.
 
 ```html
-<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-  <rect width="100" height="100" fill="#0066aa" rx="10" ry="10" />
-  <text x="50%" y="50%" dominant-baseline="central" text-anchor="middle" font-size="72" font-family="Arial" fill="white">C</text>
-</svg>
+        <header class="container-fluid text-center">
+
+            <nav class="navbar">
+                <ul class="justify-content-center">
+                    <a class="navbar-brand" href="#">My Bookshelf</a>
+                    <menu class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active"href="index.html">Home</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="bookshelf.html">Your Bookshelf</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="friends.html">Friends</a></li>
+                    </menu>
+                </ul>
+            </nav>
+
+            <hr />
+        </header>
 ```
 
 ## React Part 1: Routing
