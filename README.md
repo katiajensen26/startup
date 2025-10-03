@@ -80,26 +80,26 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **HTML pages**
-- [x] **Proper HTML element usage**
-- [x] **Links**
-- [x] **Text**
-- [x] **3rd party API placeholder**
-- [x] **Images**
-- [x] **Login placeholder**
-- [x] **DB data placeholder**
-- [x] **WebSocket placeholder** 
+- [x] **HTML pages** - I have four html pages: index.html, bookshelf.html, friends.html, customize.html
+- [x] **Proper HTML element usage** - I spent a lot of time learning about the different elements, especially about buttons and svgs so that they would show up the way I want to.
+- [x] **Links** - Everything links to the page that it is supposed to, using the navigation bar and the books as buttons.
+- [x] **Text** - Every page has sufficient text.
+- [x] **3rd party API placeholder** - The bookshelf page has a place to generator a unique url that is shorter and easy to copy/paste for friends.
+- [x] **Images** - There are svg images on the bookshelf and customize page to show what they might look like.
+- [x] **Login placeholder** - There is a login page.
+- [x] **DB data placeholder** - There is a place for books to be stored and changed.
+- [x] **WebSocket placeholder** - There is a friends page where you can visit other friends bookshelves.
 
 ## 🚀 CSS deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [x] **Header, footer, and main content body**
-- [x] **Navigation elements**
-- [x] **Responsive to window resizing**
-- [x] **Application elements**
-- [x] **Application text content**
-- [x] **Application images** 
+- [x] **Header, footer, and main content body** - I used a main.css file to style with additional css files for each page for extra customization.
+- [x] **Navigation elements** - I stylized the navigation elements so they are centered with the title at the top of the page.
+- [x] **Responsive to window resizing** - The windows respond to resizing.
+- [x] **Application elements** - The elements are styled with unique colors that go together and fit the aesthetic of the website.
+- [x] **Application text content** - I pulled in different fonts from Google Fonts to stylize and fit the aesthetic.
+- [x] **Application images**  - I stylized the images with some new text and button functionality as well as making sure they are centered where they need to be.
 
 ## 🚀 React part 1: Routing deliverable
 
