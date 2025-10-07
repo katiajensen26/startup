@@ -1,5 +1,6 @@
 import React from 'react';
 import './bookshelf.css';
+import { NavButton } from '../app';
 
 export function Bookshelf() {
   return (
@@ -54,9 +55,7 @@ export function Bookshelf() {
 
             <div>
                 <label for="new_book">Add a new book:</label>
-                <form method="get" action="customize.html" className="center-form">
-                    <button type="submit" className="custom-btn">+</button>
-                </form>
+                <NavButton text="+" url="/customize" className="custom-btn"/>
             </div>
 
             <br />

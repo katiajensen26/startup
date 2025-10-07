@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavButton } from '../app';
 
 export function Login() {
   return (
@@ -14,8 +15,8 @@ export function Login() {
                         <span className="input-group-text">🔒</span>
                         <input className="form-control" type="password" placeholder="password"/>
                     </div>
-                    <button type="submit" className="login-btn">Login</button>
-                    <button type="submit" className="custom-btn">Create</button>
+                    <NavButton text="Login" url="/bookshelf" className="login-btn"/>
+                    <NavButton text="Create" url="/bookshelf" className="custom-btn"/>
                 </form>
             </div>
         </main>

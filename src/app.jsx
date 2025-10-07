@@ -1,8 +1,9 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
+import Button from 'react-bootstrap/Button';
 
-import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 import { Login } from './login/login';
 import { Bookshelf } from './bookshelf/bookshelf';
 import { Friends } from './friends/friends';
@@ -52,4 +53,11 @@ export default function App() {
 
 function NotFound() {
   return <main className="container-fluid bg-secondary text-center">404: Return to sender. Address unknown.</main>;
+}
+
+export function NavButton({ text, url, className="" }) {
+    const navigate = useNavigate();
+    return (
+        <button type="button" className={className} onClick={() => navigate(url)}>{text}</button>
+    );
 }
