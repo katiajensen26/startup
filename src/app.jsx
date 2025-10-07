@@ -41,7 +41,7 @@ export default function App() {
 
             <footer className="text-light">
                 <div className="container-fluid" >
-                    <span>Katia Jensen</span>
+                    <span className="text-reset">Katia Jensen</span>
                     <a className="text-reset" href="https://github.com/katiajensen26/startup.git">GitHub</a>
                 </div>
             </footer>
