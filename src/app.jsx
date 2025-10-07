@@ -19,7 +19,7 @@ export default function App() {
                         <NavLink className="navbar-brand" to="#">My Bookshelf</NavLink>
                         <menu className="navbar-nav">
                             <li className="nav-item">
-                                <NavLink className="nav-link active" to="">Login</NavLink></li>
+                                <NavLink className="nav-link" to="">Login</NavLink></li>
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="bookshelf">Your Bookshelf</NavLink></li>
                             <li className="nav-item">
