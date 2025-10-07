@@ -2,36 +2,54 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 
+import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
+import { Login } from './login/login';
+import { Bookshelf } from './bookshelf/bookshelf';
+import { Friends } from './friends/friends';
+import { Customize } from './customize/customize';
+
 export default function App() {
   return (
-  <div className="text-dark">
-        <header className="container-fluid text-center">
+    <BrowserRouter>
+        <div className="text-dark">
+            <header className="container-fluid text-center">
 
-            <nav className="navbar">
-                <ul className="justify-content-center">
-                    <a className="navbar-brand" href="#">My Bookshelf</a>
-                    <menu className="navbar-nav">
-                        <li className="nav-item">
-                            <a className="nav-link active" href="index.html">Home</a></li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="bookshelf.html">Your Bookshelf</a></li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="friends.html">Friends</a></li>
-                    </menu>
-                </ul>
-            </nav>
+                <nav className="navbar">
+                    <ul className="justify-content-center">
+                        <NavLink className="navbar-brand" to="#">My Bookshelf</NavLink>
+                        <menu className="navbar-nav">
+                            <li className="nav-item">
+                                <NavLink className="nav-link active" to="">Login</NavLink></li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="bookshelf">Your Bookshelf</NavLink></li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="friends">Friends</NavLink></li>
+                        </menu>
+                    </ul>
+                </nav>
 
-            <hr />
-        </header>
+                <hr />
+            </header>
         
-        <main>App components go here</main>
+            <Routes>
+                <Route path='/' element={<Login />} exact />
+                <Route path='/bookshelf' element={<Bookshelf />} />
+                <Route path='/friends' element={<Friends />} />
+                <Route path='/customize' element={<Customize />} />
+                <Route path='*' element={<NotFound />} />
+            </Routes>
 
-        <footer className="text-light">
-            <div className="container-fluid" >
-                <span>Katia Jensen</span>
-                <a className="text-reset" href="https://github.com/katiajensen26/startup.git">GitHub</a>
-            </div>
-        </footer>
-    </div>
+            <footer className="text-light">
+                <div className="container-fluid" >
+                    <span>Katia Jensen</span>
+                    <a className="text-reset" href="https://github.com/katiajensen26/startup.git">GitHub</a>
+                </div>
+            </footer>
+        </div>
+    </BrowserRouter>
   );
+}
+
+function NotFound() {
+  return <main className="container-fluid bg-secondary text-center">404: Return to sender. Address unknown.</main>;
 }
