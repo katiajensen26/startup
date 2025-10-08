@@ -12,7 +12,7 @@ import { Customize } from './customize/customize';
 export default function App() {
   return (
     <BrowserRouter>
-        <div className="text-dark">
+        <div className="app-container text-dark">
             <header className="container-fluid text-center">
 
                 <nav className="navbar">
@@ -25,6 +25,9 @@ export default function App() {
                                 <NavLink className="nav-link" to="bookshelf">Your Bookshelf</NavLink></li>
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="friends">Friends</NavLink></li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="customize">Customize</NavLink>
+                            </li>
                         </menu>
                     </ul>
                 </nav>

@@ -5,7 +5,7 @@ import { NavButton } from '../app';
 export function Bookshelf() {
   return (
         <main className="container-fluid d-flex flex-column align-items-center">
-            <div>
+            <div className="text-center">
                 <label for="name">Bookshelf Name:</label>
                 <input type="text" id="name" name="name" placeholder="Enter your bookshelf title" size="30"/>
                 <button id="save-title" className="custom-btn">Save</button>
@@ -53,7 +53,7 @@ export function Bookshelf() {
 
             </svg>
 
-            <div>
+            <div className="text-center">
                 <label for="new_book">Add a new book:</label>
                 <NavButton text="+" url="/customize" className="custom-btn"/>
             </div>

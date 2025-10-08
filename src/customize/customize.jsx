@@ -1,18 +1,19 @@
 import React from 'react';
 import './customize.css';
+import { NavButton } from '../app';
 
 export function Customize() {
   return (
         <main className="customize-page">
             <form>
                 <div>
-                    <label for="title" style="margin-top: 1em;">Book Title:</label>
+                    <label htmlFor="title" style={{"margin-top": "1em"}}>Book Title:</label>
                     <input type="text" id="title" name="title" placeholder="Enter the book title" size="25" required/>
                 </div>
 
                 <br />
                 <div>
-                    <label for="author">Author:</label>
+                    <label htmlFor="author">Author:</label>
                     <input type="text" id="author" name="author" placeholder="Enter the author's name" size="25" required/>
                 </div>
             </form>
@@ -38,9 +39,8 @@ export function Customize() {
 
             </svg>
 
-            <form method="get" action="bookshelf.html">
-                <button type="submit" className="custom-btn">Save your book!</button>
-            </form>
+            <NavButton text="Add to bookshelf!" url="/bookshelf" className="custom-btn"/>
+            
 
         </main>
   );
