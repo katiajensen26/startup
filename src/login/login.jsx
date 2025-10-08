@@ -9,7 +9,7 @@ export function Login() {
                 <form method="get" action="bookshelf.html">
                     <div className="input-group mb-3">
                         <span className="input-group-text">@</span>
-                        <input className="form-control" type="text" placeholder="your@email.com"/>
+                        <input className="form-control" type="email" placeholder="your@email.com"/>
                     </div>
                     <div className="input-group mb-3">
                         <span className="input-group-text">🔒</span>
