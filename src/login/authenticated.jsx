@@ -9,15 +9,15 @@ export function Authenticated(props) {
     const navigate = useNavigate();
 
     function logout() {
-        locatStorage.removeItem('userName');
+        localStorage.removeItem('userName');
         props.onLogout();
     }
 
     return (
         <div>
             <div className='playerName'>{props.username}</div>
-            <NavButton text='Bookshelf' onClick={() => navigate('/bookshelf')} className='nav-btn'/>
-            <NavButton text="Logout" onClick={() => logout()} className='nav-btn'/>
+            <NavButton text='Bookshelf' onClick={() => navigate('/bookshelf')} className='custom-btn'/>
+            <NavButton text="Logout" onClick={() => logout()} className='login-btn'/>
         </div>
     );
 }

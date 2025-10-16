@@ -3,13 +3,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 import Button from 'react-bootstrap/Button';
 
+
 import { BrowserRouter, NavLink, Route, Routes, useNavigate } from 'react-router-dom';
 import { Login } from './login/login';
 import { Bookshelf } from './bookshelf/bookshelf';
 import { Friends } from './friends/friends';
 import { Customize } from './customize/customize';
+import { AuthState } from './login/authState';
 
 export default function App() {
+    const [userName, setUsername] = React.useState(localStorage.getItem('userName'));
+    const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
+    const [authState, setAuthState] = React.useState(currentAuthState);
+
+
   return (
     <BrowserRouter>
         <div className="app-container text-dark">
@@ -20,14 +27,20 @@ export default function App() {
                         <NavLink className="navbar-brand" to="#">My Bookshelf</NavLink>
                         <menu className="navbar-nav">
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="">Login</NavLink></li>
+                                <NavLink className="nav-link" to="/">Login</NavLink></li>
+                            {authState === AuthState.Authenticated && (
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="bookshelf">Your Bookshelf</NavLink></li>
+                                <NavLink className="nav-link" to="/bookshelf">Your Bookshelf</NavLink></li>
+                            )}
+                            {authState === AuthState.Authenticated && (
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="friends">Friends</NavLink></li>
+                                <NavLink className="nav-link" to="/friends">Friends</NavLink></li>
+                            )}
+                            {authState === AuthState.Authenticated && (
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="customize">Customize</NavLink>
+                                <NavLink className="nav-link" to="/customize">Customize</NavLink>
                             </li>
+                            )}
                         </menu>
                     </ul>
                 </nav>
@@ -36,7 +49,15 @@ export default function App() {
             </header>
         
             <Routes>
-                <Route path='/' element={<Login />} exact />
+                <Route path='/' element={
+                    <Login userName={userName}
+                    authState={authState}
+                    onAuthChange={(userName, authState) => {
+                        setAuthState(authState);
+                        setUsername(userName);
+                    }}
+                    />
+                } />
                 <Route path='/bookshelf' element={<Bookshelf />} />
                 <Route path='/friends' element={<Friends />} />
                 <Route path='/customize' element={<Customize />} />
@@ -58,9 +79,18 @@ function NotFound() {
   return <main className="container-fluid bg-secondary text-center">404: Return to sender. Address unknown.</main>;
 }
 
-export function NavButton({ text, url, className="" }) {
+export function NavButton({ text, url, onClick, className="", disabled=false }) {
     const navigate = useNavigate();
+
+    function handleClick() {
+        if (onClick) {
+            onClick();
+        } else if (url) {
+            navigate(url);
+        }
+    }
+
     return (
-        <button type="button" className={className} onClick={() => navigate(url)}>{text}</button>
+        <button type="button" className={className} onClick={handleClick} disabled={disabled}>{text}</button>
     );
 }

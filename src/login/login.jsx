@@ -1,24 +1,27 @@
 import React from 'react';
 import { NavButton } from '../app';
 
-export function Login() {
+import { Unauthenticated } from './unauthenticated';
+import { Authenticated } from './authenticated';
+import { AuthState } from './authState';
+
+export function Login({ userName, authState, onAuthChange }) {
   return (
         <main className="container-fluid text-center">
             <div>
-                <h1>Welcome to My Bookshelf!</h1>
-                <form method="get" action="bookshelf.html">
-                    <div className="input-group mb-3">
-                        <span className="input-group-text">@</span>
-                        <input className="form-control" type="email" placeholder="your@email.com"/>
-                    </div>
-                    <div className="input-group mb-3">
-                        <span className="input-group-text">🔒</span>
-                        <input className="form-control" type="password" placeholder="password"/>
-                    </div>
-                    <NavButton text="Login" url="/bookshelf" className="login-btn"/>
-                    <NavButton text="Create" url="/bookshelf" className="custom-btn"/>
-                </form>
+                {authState !== AuthState.Unknown && <h1>Welcome to My Bookshelf!</h1>}
+                {authState === AuthState.Authenticated && (
+                    <Authenticated username={userName} onLogout={() => onAuthChange(userName, AuthState.Unauthenticated)} />
+                )}
+                {authState === AuthState.Unauthenticated && (
+                    <Unauthenticated
+                        userName={userName}
+                        onLogin={(loginUserName) =>
+                            onAuthChange(loginUserName, AuthState.Authenticated)
+                        }
+                    />
+                )}
             </div>
         </main>
-  );
+    );
 }
