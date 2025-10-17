@@ -75,6 +75,43 @@ This was a lot of fun to see it all come together. I had to keep remembering to 
 
 Handling the toggling of the checkboxes was particularly interesting.
 
+Here is the original shelf placeholder code in case you ever need to come back to it.
+
+```jsx
+                {/* <Link to="/customize">
+                    <rect x ="50" y="100" width="50" height="200" fill="#2791c2"></rect>
+                    <rect x = "100" y="100" width="50" height="200" fill="#f2a900"></rect>
+                    <rect x = "325" y="100" width="50" height="200" fill="#e03c31"></rect>
+                    <rect x = "375" y="100" width="50" height="200" fill="#34a853"></rect>
+                    <rect x = "425" y="100" width="50" height="200" fill="#bb2bcc"></rect>
+
+                    <rect x="150" y="400" width="50" height="200" fill="#5ba80d"></rect>
+                    <rect x="200" y="400" width="50" height="200" fill="#0d60a8"></rect>
+                    <rect x="400" y="400" width="50" height="200" fill="#e0a614"></rect>
+
+                    <rect x="50" y="700" width="50" height="200" fill="#a80d60"></rect>
+                    <rect x="100" y="700" width="50" height="200" fill="#ff7de7"></rect>
+                    <rect x="500" y="700" width="50" height="200" fill="#d93025"></rect>
+                </Link>
+
+                <text x="50" y="230" className="book-label" transform="rotate(-90, 50, 200)">Book 1</text>
+                <text x="100" y="230" className="book-label" transform="rotate(-90, 100, 200)">Book 2</text>
+                <text x="325" y="230" className="book-label" transform="rotate(-90, 325, 200)">Book 3</text>
+                <text x="375" y="230" className="book-label" transform="rotate(-90, 375, 200)">Book 4</text>
+                <text x="425" y="230" className="book-label" transform="rotate(-90, 425, 200)">Book 5</text>
+
+
+                <text x="240" y="630" className="book-label" transform="rotate(-90, 150, 600)">Book 6</text>
+                <text x="290" y="630" className="book-label" transform="rotate(-90, 200, 600)">Book 7</text>
+                <text x="490" y="630" className="book-label" transform="rotate(-90, 400, 600)">Book 8</text>
+
+                <text x="140" y="930" className="book-label" transform="rotate(-90, 50, 900)">Book 9</text>
+                <text x="190" y="930" className="book-label" transform="rotate(-90, 100, 900)">Book 10</text>
+                <text x="590" y="930" className="book-label" transform="rotate(-90, 500, 900)">Book 11</text> */}
+
+
+```
+
 ```jsx
 <div className="input-group sound-button-container">
   {calmSoundTypes.map((sound, index) => (
