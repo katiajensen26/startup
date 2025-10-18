@@ -9,6 +9,7 @@ export function Customize() {
     const [bookColor, setBookColor] = React.useState('#2791c2');
     const [bandColor, setBandColor] = React.useState('#fcdc42');
     const [shelf, setShelf] = React.useState(0);
+    const [font, setFont] = React.useState('Merriweather');
     const navigate = useNavigate();
 
     function changeBookColor(direction) {
@@ -35,12 +36,25 @@ export function Customize() {
         setBandColor(bandColors[newIndex]);
     }
 
+    function changeFont(direction) {
+        const fonts = ['Merriweather', 'Playfair Display', 'Lobster', 'Roboto Slab', 'Shadows Into Light Two', 'Fredoka'];
+        const currentIndex = fonts.indexOf(font);
+        let newIndex;
+        if (direction === 'left') {
+            newIndex = (currentIndex - 1 + fonts.length) % fonts.length;
+        } else {
+            newIndex = (currentIndex + 1) % fonts.length;
+        }
+        setFont(fonts[newIndex]);
+    }
+
     function handleSaveBook() {
         const newBook = {
             title,
             author,
             bookColor,
             bandColor,
+            font,
             shelf
         };
         addBook([...books, newBook]);
@@ -68,18 +82,18 @@ export function Customize() {
 
                 <polygon id= "gold-style-left" points="100,145 150,80 150,210" fill="#e3b900" className="book-style-btn" onClick={() => changeBandColor('left')}></polygon>
                 <polygon id ="main-color-left" points="100,445 150,380 150,510" fill="#e3b900" className="book-style-btn" onClick={() => changeBookColor('left')}></polygon>
-                <polygon id="extra-style-left" points="100,745 150,680 150,810" fill="#e3b900" className="book-style-btn"></polygon>
+                <polygon id="extra-style-left" points="100,745 150,680 150,810" fill="#e3b900" className="book-style-btn" onClick={() => changeFont('left')}></polygon>
 
                 <rect x="300" y="50" width="200" height="800" fill={bookColor}></rect>
-                <text x="350" y="400" className="book-title" transform="rotate(-90, 400, 400)">{title}</text>
-                <text x="450" y="550" className="book-author" transform="rotate(-90, 400, 500)">{author}</text>
+                <text x="350" y="400" className="book-title" transform="rotate(-90, 400, 400)" fontFamily={font}>{title || 'Book Title'}</text>
+                <text x="450" y="550" className="book-author" transform="rotate(-90, 400, 500)" fontFamily={font}>{author || 'Author Name'}</text>
 
                 <rect x="300" y="100" width="200" height="100" fill={bandColor}></rect>
                 <rect x="300" y="700" width="200" height="100" fill={bandColor}></rect>
 
                 <polygon id="gold-style-right" points="700,145 650,80 650,210" fill="#e3b900" className="book-style-btn" onClick={() => changeBandColor('right')}></polygon>
                 <polygon id="main-color-right" points="700,445 650,380 650,510" fill="#e3b900" className="book-style-btn" onClick={() => changeBookColor('right')}></polygon>
-                <polygon id="extra-style-right" points="700,745 650,680 650,810" fill="#e3b900" className="book-style-btn" onClick={() => changeBandColor('right')}></polygon>
+                <polygon id="extra-style-right" points="700,745 650,680 650,810" fill="#e3b900" className="book-style-btn" onClick={() => changeFont('right')}></polygon>
 
             </svg>
 
