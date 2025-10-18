@@ -6,6 +6,14 @@ I learned a lot about how git works and how to work with it in the terminal. I a
 
 [My startup - Simon](https://simon.cs260.click)
 
+Example - banana.fruit.bozo.click
+Top level domain: .click
+root domain: bozo.click
+subdomain: fruit.bozo.click
+Nested subdomain: banana.fruit.bozo.click
+
+A DNS A record points to an IP address; it should not point to another A record.
+
 ## Helpful links
 
 - [Course instruction](https://github.com/webprogramming260)
@@ -27,7 +35,26 @@ No problems worked just like it said in the [instruction](https://github.com/web
 
 ## HTML
 
+How to initialize an HTML file: <!DOCTYPE html>
+Then wrap the code in <html> tags.
+Then set the characters: <meta charset = "UTF-8">
+Setting the viewport: <meta name="viewport" content="width=device-width, initial-scale=1.0">
+Linking a css file: <link rel="stylesheet" href="style.css">
+Linking a javascript file: <script src="test.js"></script>
 I learned a lot about HTML. I just need to work on getting better at remembering all of the different tags and what they do.
+
+A <div> tag is a container element used to group HTML elements together. It has no visual effect by itself. Helps structure the page for styling using CSS.
+Padding increases internal spacing while margins affect the space outside an element.
+Arrow syntax allows for concise one-line functions like: const greet= (name) => {return 'Hello, ' + name;}
+#title selects an element by ID (unique) .grid selects elements by class (can apply to multiple elements)
+
+HTML Tags:
+Paragraph: <p>
+Ordered list: <ol>
+Unordered list: <ul>
+h2: <h2>
+h1: <h1>
+h3: <h3>
 
 This is how you deploy files so your website actually shows up like you want it to. You HAVE to make sure you are in the right folder for it to work.
 
@@ -65,15 +92,41 @@ I did use the simon navigation bar as a template but I altered it slightly so th
         </header>
 ```
 
+If a container uses display: flex, the images will be displayed in a row by default, unless flex-direction: column is specified.
+
+By deafult, the HTML span element has a CSS display property of inline.
+To change all div elements to have a background color of red: div { background-color: red; }
+
+
+## Javascript
+
+how to get a form from an html file: const form = document.getElementbyID("emailform")
+how to get a form from an html file: const message = document.getElementbyID("email")
+how to make a counter onclick: 
+```jsx
+document.getElementbyID("plus").addEventListener("click" => () {
+  count = count + 1;
+  number.textContent = count;
+})
+```
+The DOM represents the HTML document as a tree of objects.
+You can use JavaScript to access and modify DOM elements.
+Each HTML element is a node in the DOM.
+
+Valid javscript syntax for different statements:
+if (x > 5) {...} else {...} for {...}{...} while {...}{...} switch(x) {case 1: ...; break; default: ...}
+
+Correct syntax for creating a javascript object:
+const person = {name: "John", age:30 }
+
 ## React Part 1: Routing
 
 Setting up Vite and React was pretty simple. I had a bit of trouble because of conflicting CSS. This isn't as straight forward as you would find with Svelte or Vue, but I made it work in the end. If there was a ton of CSS it would be a real problem. It sure was nice to have the code structured in a more usable way.
 
 ## React Part 2: Reactivity
 
-This was a lot of fun to see it all come together. I had to keep remembering to use React state instead of just manipulating the DOM directly.
-
-Handling the toggling of the checkboxes was particularly interesting.
+What is JSON?
+JSON (JavaScript Object Notation) is a text-based format for structured data using key-value pairs.
 
 Here is the original shelf placeholder code in case you ever need to come back to it.
 
@@ -131,3 +184,33 @@ Here is the original shelf placeholder code in case you ever need to come back t
   ))}
 </div>
 ```
+
+## Other Important Information
+
+Console commands:
+chmod - change permissions
+pwd - print working directory
+cd - change directory
+ls - list files --> ls -la lists all files (including hidden ones) in long format
+vim/nano - text editors
+mkdir - make directory
+mv - move/rename
+rm - remove
+man - manual
+ssh - remote shell
+ps - processes
+wget - download files
+sudo - run as admin
+
+
+Different Ports:
+20 - File Transfer Protocol (FTP) for data transfer
+22 - Secure Shell (SSH) for connecting to remote devices
+25 - Simple Mail Transfer Protocol (SMTP) for sending email
+53 - Domain Name System (DNS) for looking up IP addresses
+80 - Hypertext Transfer Protocol (HTTP) for web requests.
+110 - Post Office Protocol (POP3) for retrieving email
+123 - Network Time Protocol (NTP) for managing time.
+161 - Simple Network Management Protocol (SNMP) for managing network devices such as routers or printers
+194 - Internet Relay Chat (IRC) for chatting
+443 - HTTP secure (HTTPS) for secure web requests
