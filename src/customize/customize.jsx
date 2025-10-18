@@ -10,6 +10,12 @@ export function Customize() {
     const [bandColor, setBandColor] = React.useState('#fcdc42');
     const [shelf, setShelf] = React.useState(0);
     const [font, setFont] = React.useState('Merriweather');
+
+    // const maxWidth = 180;
+    // const baseFontSize = 80;
+    // const scaleFactor = title.length > 0 ? Math.min(1, maxWidth / (title.length * 20)) : 1;
+    // const currentFontSize = baseFontSize * scaleFactor;
+
     const navigate = useNavigate();
 
     function changeBookColor(direction) {
@@ -46,6 +52,18 @@ export function Customize() {
             newIndex = (currentIndex + 1) % fonts.length;
         }
         setFont(fonts[newIndex]);
+    }
+
+    function fitFontSize(text, font, maxWidth, baseSize = 80) {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        let size = baseSize;
+        context.font = `${size}px ${font}`;
+        while (context.measureText(text).width > maxWidth && size > 10) {
+            size -= 1;
+            context.font = `${size}px ${font}`;
+        }
+        return size;
     }
 
     function handleSaveBook() {
@@ -85,7 +103,7 @@ export function Customize() {
                 <polygon id="extra-style-left" points="100,745 150,680 150,810" fill="#e3b900" className="book-style-btn" onClick={() => changeFont('left')}></polygon>
 
                 <rect x="300" y="50" width="200" height="800" fill={bookColor}></rect>
-                <text x="350" y="400" className="book-title" transform="rotate(-90, 400, 400)" fontFamily={font}>{title || 'Book Title'}</text>
+                <text x="350" y="400" className="book-title" transform="rotate(-90, 400, 400)" fontFamily={font} fontSize={fitFontSize(title, font, 475)}>{title || 'Book Title'}</text>
                 <text x="450" y="550" className="book-author" transform="rotate(-90, 400, 500)" fontFamily={font}>{author || 'Author Name'}</text>
 
                 <rect x="300" y="100" width="200" height="100" fill={bandColor}></rect>
