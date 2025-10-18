@@ -16,6 +16,18 @@ export default function App() {
     const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
     const [authState, setAuthState] = React.useState(currentAuthState);
 
+    const [books, setBooks] = React.useState(() => {
+        const savedBooks = localStorage.getItem('bookshelf');
+        return savedBooks ? JSON.parse(savedBooks) : [];
+    });
+
+    React.useEffect(() => {
+        localStorage.setItem('bookshelf', JSON.stringify(books));
+    }, [books]);
+
+    function addBook(newBook) {
+        setBooks((prevBooks) => [...prevBooks, newBook]);
+    }
 
   return (
     <BrowserRouter>
@@ -58,9 +70,9 @@ export default function App() {
                     }}
                     />
                 } />
-                <Route path='/bookshelf' element={<Bookshelf />} />
+                <Route path='/bookshelf' element={<Bookshelf books={books} />} />
                 <Route path='/friends' element={<Friends />} />
-                <Route path='/customize' element={<Customize />} />
+                <Route path='/customize' element={<Customize books={books} addBook={addBook} />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>
 

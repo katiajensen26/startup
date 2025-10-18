@@ -3,23 +3,9 @@ import './bookshelf.css';
 import { NavButton } from '../app';
 import { Link } from 'react-router-dom';
 
-export function Bookshelf() {
+export function Bookshelf({ books }) {
     const [bookshelfName, setBookshelfName] = React.useState('');
-    const [books, setBooks] = React.useState([]);
 
-    function addBook() {
-        const newBook = {
-            title: `Book ${books.length + 1}`,
-            color: getRandomColor(),
-            shelf: Math.floor(books.length / 5),
-        };
-        setBooks([...books, newBook]);
-    }
-
-    function getRandomColor() {
-        const colors = ['2791c2', 'f2a900', 'e03c31', '34a853', 'bb2bcc', '5ba80d', '0d60a8', 'e0a614', 'a80d60', 'ff7de7', 'd93025'];
-        return colors[Math.floor(Math.random() * colors.length)];
-    }
 
     function handleBookshelfTitle(event) {
         setBookshelfName(event.target.value);
