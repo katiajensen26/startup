@@ -7,9 +7,19 @@ export function Bookshelf({ books }) {
     const [bookshelfName, setBookshelfName] = React.useState('');
 
 
+    function handleSave() {
+        localStorage.setItem('bookshelfName', bookshelfName);
+        placeholder = '';
+    }
+
     function handleBookshelfTitle(event) {
         setBookshelfName(event.target.value);
     }
+
+    React.useEffect(() => {
+        const savedName = localStorage.getItem('bookshelfName');
+        if (savedName) {setBookshelfName(savedName);}
+    }, []);
 
     function handleBookshelfShare() {
         const bookshelfURL = window.location.href; //placeholder until third party api is added
@@ -33,8 +43,9 @@ export function Bookshelf({ books }) {
         <main className="container-fluid d-flex flex-column align-items-center">
             <div className="text-center">
                 <label htmlFor="name">Bookshelf Name:</label>
-                <input type="text" id="name" name="name" placeholder="Enter your bookshelf title" size="30" value={bookshelfName} onChange={handleBookshelfTitle} />
-                <button id="save-title" className="custom-btn" onClick={handleBookshelfTitle}>Save</button>
+                <input type="text" id="name" name="name" placeholder={bookshelfName ? '' : "Enter your bookshelf title"} size="30" value={bookshelfName} onChange={handleBookshelfTitle} />
+                <button id="save-title" className="custom-btn" onClick={handleSave}>Save</button>
+                <h2>{bookshelfName || "My Bookshelf"}</h2>
             </div>
 
             <br />
