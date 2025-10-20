@@ -17,6 +17,18 @@ export function Bookshelf({ books }) {
         alert('Bookshelf URL copied to clipboard: ' + bookshelfURL);
     }
 
+    function fitFontSize(text, font, maxWidth, baseSize = 80) {
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        let size = baseSize;
+        context.font = `${size}px ${font}`;
+        while (context.measureText(text).width > maxWidth && size > 10) {
+            size -= 1;
+            context.font = `${size}px ${font}`;
+        }
+        return size;
+    }
+
     return (
         <main className="container-fluid d-flex flex-column align-items-center">
             <div className="text-center">
@@ -32,20 +44,37 @@ export function Bookshelf({ books }) {
                 <rect x ="0" y="600" width="700" height="20" fill="#4a290a"></rect>
                 <rect x ="0" y="900" width="700" height="20" fill="#4a290a"></rect>
 
-                {books.map((book, index) => {
-                    const shelfY = [100, 400, 700][book.shelf];
-                    const bookX = 50 + (index % 5) * 75;
-                    const labelY = shelfY + 130;
 
-                    return (
-                        <g key={index}>
-                            <rect x={bookX} y={shelfY} width='50' height='200' fill={book.bookColor}></rect>
-                            <text x={bookX} y={labelY} className='book-label' transform={`rotate(-90, ${bookX}, ${labelY - 30})`} fontFamily={book.font} fill="#ffffff" textLength={180} lengthAdjust="spacingAndGlyphs">{book.title}</text>
+            {(() => {
+
+                const bookWidth = 50;
+                const bookHeight = 200;
+                const spacing = 25;
+                const shelfPositions = [100, 400, 700];
+                const maxBooks = Math.floor(700 / (bookWidth + spacing));
+
+                return books.map((book, index) => {
+                    const shelfIndex = Math.floor(index / maxBooks);
+
+
+                    const shelfY = shelfPositions[shelfIndex];
+                    const columnIndex = index % maxBooks;
+                    const bookX = 50 + columnIndex * (bookWidth + spacing);
+                    const bookY = shelfY - bookHeight + 200;
+
+                    const centerX = bookX + bookWidth / 2;
+                    const centerY = bookY + bookHeight / 2;
+
+                     return (
+                        <g key={`${shelfIndex}-${index}`}>
+                            <rect x={bookX} y={bookY} width={bookWidth} height={bookHeight} fill={book.bookColor}></rect>
+                            <text x={centerX} y={centerY} className='book-label' transform={`rotate(-90, ${centerX}, ${centerY})`} fontFamily={book.font} fontSize={fitFontSize(book.title, book.font, 180, 20)} >{book.title}</text>
                         </g>
-                    );
-                })}
+                        );
+                    });
+                })()}
 
-            </svg>
+                </svg>
 
             <div className="text-center">
                 <label htmlFor="new_book">Add a new book:</label>
