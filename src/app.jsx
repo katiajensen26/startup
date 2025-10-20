@@ -28,6 +28,10 @@ export default function App() {
         setBooks((prevBooks) => [...prevBooks, newBook]);
     }
 
+    function deleteBook(index) {
+        setBooks((prevBooks) => prevBooks.filter((_, i) => i !== index));
+    }
+
   return (
     <BrowserRouter>
         <div className="app-container text-dark">
@@ -70,8 +74,8 @@ export default function App() {
                     }}
                     />
                 } />
-                <Route path='/bookshelf' element={<Bookshelf books={books} />} />
-                <Route path='/customize' element={<Customize addBook={addBook} />} />
+                <Route path='/bookshelf' element={<Bookshelf books={books} deleteBook={deleteBook} />} />
+                <Route path='/customize' element={<Customize addBook={addBook} deleteBook={deleteBook} />} />
                 <Route path='/friends' element={<Friends />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>

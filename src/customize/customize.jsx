@@ -8,15 +8,14 @@ export function Customize({ books, addBook }) {
     const [author, setAuthor] = React.useState('');
     const [bookColor, setBookColor] = React.useState('#2791c2');
     const [bandColor, setBandColor] = React.useState('#fcdc42');
-    const [shelf, setShelf] = React.useState(0);
     const [font, setFont] = React.useState('Merriweather');
 
     const [searchParams] = useSearchParams();
     const editBook = searchParams.get('edit');
     const savedBooks = JSON.parse(localStorage.getItem('books')) || [];
+    const bookIndex = editBook ? parseInt(editBook) : null;
 
-
-
+    const book = bookIndex !== null ? savedBooks[bookIndex] : null;
 
     const navigate = useNavigate();
 
@@ -74,8 +73,7 @@ export function Customize({ books, addBook }) {
             author,
             bookColor,
             bandColor,
-            font,
-            shelf
+            font
         };
 
         if (editBook !== null) {
