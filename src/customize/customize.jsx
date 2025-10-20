@@ -1,7 +1,7 @@
 import React from 'react';
 import './customize.css';
 import { NavButton } from '../app';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 
 export function Customize({ books, addBook }) {
     const [title, setTitle] = React.useState('');
@@ -10,6 +10,12 @@ export function Customize({ books, addBook }) {
     const [bandColor, setBandColor] = React.useState('#fcdc42');
     const [shelf, setShelf] = React.useState(0);
     const [font, setFont] = React.useState('Merriweather');
+
+    const [searchParams] = useSearchParams();
+    const editBook = searchParams.get('edit');
+    const savedBooks = JSON.parse(localStorage.getItem('books')) || [];
+
+
 
 
     const navigate = useNavigate();
@@ -71,8 +77,38 @@ export function Customize({ books, addBook }) {
             font,
             shelf
         };
-        addBook(newBook);
+
+        if (editBook !== null) {
+            savedBooks[parseInt(editBook)] = newBook;
+        } else {
+            savedBooks.push(newBook);
+        }
+
+        localStorage.setItem('books', JSON.stringify(savedBooks));
+        //addBook(newBook);
         navigate('/bookshelf');
+    }
+
+    React.useEffect(() => {
+        if (editBook !== null) {
+            const booktoEdit = savedBooks[parseInt(editBook)];
+            if (booktoEdit) {
+                setTitle(booktoEdit.title);
+                setAuthor(booktoEdit.author);
+                setBookColor(booktoEdit.bookColor);
+                setBandColor(booktoEdit.bandColor);
+                setFont(booktoEdit.font);
+            }
+        }
+    }, [editBook]);
+
+    function handleDeleteBook() {
+        if (editBook !== null) return; 
+
+        savedBooks.splice(parseInt(editBook), 1);
+        localStorage.setItem('books', JSON.stringify(savedBooks));
+        navigate('/bookshelf');
+
     }
 
     return (
@@ -112,6 +148,7 @@ export function Customize({ books, addBook }) {
             </svg>
 
             <NavButton text="Add to bookshelf!" onClick={handleSaveBook} className="custom-btn"/>
+            <NavButton text="Delete Book" onClick={handleDeleteBook} className="delete-btn"/>
             
 
         </main>
