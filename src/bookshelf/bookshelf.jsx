@@ -39,8 +39,8 @@ export function Bookshelf({ books }) {
 
                     return (
                         <g key={index}>
-                            <rect x={bookX} y={shelfY} width='50' height='200' fill={book.color}></rect>
-                            <text x={bookX} y={labelY} className='book-label' transform={`rotate(-90, ${bookX}, ${labelY})`}>{book.title}</text>
+                            <rect x={bookX} y={shelfY} width='50' height='200' fill={book.bookColor}></rect>
+                            <text x={bookX} y={labelY} className='book-label' transform={`rotate(-90, ${bookX}, ${labelY - 30})`} fontFamily={book.font} fill="#ffffff" textLength={180} lengthAdjust="spacingAndGlyphs">{book.title}</text>
                         </g>
                     );
                 })}

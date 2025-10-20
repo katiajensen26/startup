@@ -1,7 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
-import Button from 'react-bootstrap/Button';
 
 
 import { BrowserRouter, NavLink, Route, Routes, useNavigate } from 'react-router-dom';
@@ -46,13 +45,14 @@ export default function App() {
                             )}
                             {authState === AuthState.Authenticated && (
                             <li className="nav-item">
-                                <NavLink className="nav-link" to="/friends">Friends</NavLink></li>
-                            )}
-                            {authState === AuthState.Authenticated && (
-                            <li className="nav-item">
                                 <NavLink className="nav-link" to="/customize">Customize</NavLink>
                             </li>
                             )}
+                            {authState === AuthState.Authenticated && (
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/friends">Friends</NavLink></li>
+                            )}
+
                         </menu>
                     </ul>
                 </nav>
@@ -71,8 +71,8 @@ export default function App() {
                     />
                 } />
                 <Route path='/bookshelf' element={<Bookshelf books={books} />} />
+                <Route path='/customize' element={<Customize addBook={addBook} />} />
                 <Route path='/friends' element={<Friends />} />
-                <Route path='/customize' element={<Customize books={books} addBook={addBook} />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>
 

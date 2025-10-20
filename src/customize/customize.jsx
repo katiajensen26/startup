@@ -3,7 +3,7 @@ import './customize.css';
 import { NavButton } from '../app';
 import { useNavigate } from 'react-router-dom';
 
-export function Customize() {
+export function Customize({ books, addBook }) {
     const [title, setTitle] = React.useState('');
     const [author, setAuthor] = React.useState('');
     const [bookColor, setBookColor] = React.useState('#2791c2');
@@ -11,10 +11,6 @@ export function Customize() {
     const [shelf, setShelf] = React.useState(0);
     const [font, setFont] = React.useState('Merriweather');
 
-    // const maxWidth = 180;
-    // const baseFontSize = 80;
-    // const scaleFactor = title.length > 0 ? Math.min(1, maxWidth / (title.length * 20)) : 1;
-    // const currentFontSize = baseFontSize * scaleFactor;
 
     const navigate = useNavigate();
 
@@ -75,7 +71,7 @@ export function Customize() {
             font,
             shelf
         };
-        addBook([...books, newBook]);
+        addBook(newBook);
         navigate('/bookshelf');
     }
 
