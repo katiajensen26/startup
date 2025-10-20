@@ -11,6 +11,19 @@ button.custom-btn {
     border-radius: 12px;
 }
 
+button.delete-btn {
+    background-color: #ff4c4c;
+    border: none;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
 .book-label {
     fill: white;
     cursor: pointer;

@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 export function Bookshelf({ books }) {
     const [bookshelfName, setBookshelfName] = React.useState('');
 
-
     function handleSave() {
         localStorage.setItem('bookshelfName', bookshelfName);
         placeholder = '';
