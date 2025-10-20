@@ -77,9 +77,14 @@ export function Bookshelf({ books }) {
                     const centerY = bookY + bookHeight / 2;
 
                      return (
+                    
                         <g key={`${shelfIndex}-${index}`}>
-                            <rect x={bookX} y={bookY} width={bookWidth} height={bookHeight} fill={book.bookColor}></rect>
-                            <text x={centerX} y={centerY} className='book-label' transform={`rotate(-90, ${centerX}, ${centerY})`} fontFamily={book.font} fontSize={fitFontSize(book.title, book.font, 180, 20)} >{book.title}</text>
+                            <Link to={`/customize?edit=${index}`}>
+                                <rect x={bookX} y={bookY} width={bookWidth} height={bookHeight} fill={book.bookColor}></rect>
+                                <rect x={bookX} y={bookY+20} width={bookWidth} height='20' fill={book.bandColor}></rect>
+                                <rect x={bookX} y={bookY+160} width={bookWidth} height='20' fill={book.bandColor}></rect>
+                            </Link>
+                            <text x={centerX} y={centerY} className='book-label' transform={`rotate(-90, ${centerX}, ${centerY})`} fontFamily={book.font} fontSize={fitFontSize(book.title, book.font, 100, 20)} >{book.title}</text>
                         </g>
                         );
                     });
