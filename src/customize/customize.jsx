@@ -102,8 +102,7 @@ export function Customize({ books, deleteBook, setBooks, addBook }) {
     function handleDeleteBook() {
         if (bookIndex === undefined) return;
 
-        const updatedBooks = books.filter((_, index) => index !== bookIndex);
-        setBooks(updatedBooks);
+        deleteBook(bookIndex);
         navigate('/bookshelf');
 
     }
@@ -145,7 +144,7 @@ export function Customize({ books, deleteBook, setBooks, addBook }) {
             </svg>
 
             <NavButton text={editedBook ? "Save Changes" : "Add to bookshelf!"} onClick={handleSaveBook} className="custom-btn"/>
-            { editedBook && <NavButton text="Delete Book" onClick={handleDeleteBook} className="delete-btn"/> }
+            <NavButton text="Delete Book" onClick={handleDeleteBook} className="delete-btn"/>
             
 
         </main>
