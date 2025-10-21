@@ -78,7 +78,7 @@ export function Bookshelf({ books }) {
                      return (
                     
                         <g key={`${shelfIndex}-${index}`}>
-                            <Link to={`/customize?edit=${index}`}>
+                            <Link to={`/customize`} state={{ bookIndex: index }}>
                                 <rect x={bookX} y={bookY} width={bookWidth} height={bookHeight} fill={book.bookColor}></rect>
                                 <rect x={bookX} y={bookY+20} width={bookWidth} height='20' fill={book.bandColor}></rect>
                                 <rect x={bookX} y={bookY+160} width={bookWidth} height='20' fill={book.bandColor}></rect>

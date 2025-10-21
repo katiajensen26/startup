@@ -1,23 +1,25 @@
-import React from 'react';
+import React, { use } from 'react';
 import './customize.css';
 import { NavButton } from '../app';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
 
-export function Customize({ books, addBook }) {
-    const [title, setTitle] = React.useState('');
-    const [author, setAuthor] = React.useState('');
-    const [bookColor, setBookColor] = React.useState('#2791c2');
-    const [bandColor, setBandColor] = React.useState('#fcdc42');
-    const [font, setFont] = React.useState('Merriweather');
-
-    const [searchParams] = useSearchParams();
-    const editBook = searchParams.get('edit');
-    const savedBooks = JSON.parse(localStorage.getItem('books')) || [];
-    const bookIndex = editBook ? parseInt(editBook) : null;
-
-    const book = bookIndex !== null ? savedBooks[bookIndex] : null;
-
+export function Customize({ books, deleteBook, setBooks, addBook }) {
+    const bookLocation = useLocation();
     const navigate = useNavigate();
+    const bookIndex = bookLocation.state?.bookIndex;
+    const editedBook = bookIndex !== undefined ? books[bookIndex] : null;
+
+    const [title, setTitle] = React.useState(editedBook ? editedBook.title : '');
+    const [author, setAuthor] = React.useState(editedBook ? editedBook.author : '');
+    const [bookColor, setBookColor] = React.useState(editedBook ? editedBook.bookColor : '#2791c2');
+    const [bandColor, setBandColor] = React.useState(editedBook ? editedBook.bandColor : '#fcdc42');
+    const [font, setFont] = React.useState(editedBook ? editedBook.font : 'Merriweather');
+
+    // const [searchParams] = useSearchParams();
+    // const editBook = searchParams.get('edit');
+    // const savedBooks = JSON.parse(localStorage.getItem('books')) || [];
+
+    // const book = bookIndex !== null ? savedBooks[bookIndex] : null;
 
     function changeBookColor(direction) {
         const bookColors = ['#2791c2', '#0d60a8', '#bb2bcc', '#a80d60', '#ff7de7', '#d93025', '#e07431ff', '#e0a614', '#34a853', '#2f4f0fff', '#b0a8a8ff', '#000000'];
@@ -76,35 +78,32 @@ export function Customize({ books, addBook }) {
             font
         };
 
-        if (editBook !== null) {
-            savedBooks[parseInt(editBook)] = newBook;
+        if (bookIndex !== undefined) {
+            const updatedBooks = books.map((book, index) =>
+                index === bookIndex ? newBook : book
+            );
+            setBooks(updatedBooks);
         } else {
-            savedBooks.push(newBook);
+            addBook(newBook);
         }
-
-        localStorage.setItem('books', JSON.stringify(savedBooks));
-        //addBook(newBook);
         navigate('/bookshelf');
     }
 
     React.useEffect(() => {
-        if (editBook !== null) {
-            const booktoEdit = savedBooks[parseInt(editBook)];
-            if (booktoEdit) {
-                setTitle(booktoEdit.title);
-                setAuthor(booktoEdit.author);
-                setBookColor(booktoEdit.bookColor);
-                setBandColor(booktoEdit.bandColor);
-                setFont(booktoEdit.font);
-            }
+        if (editedBook) {
+            setTitle(editedBook.title);
+            setAuthor(editedBook.author);
+            setBookColor(editedBook.bookColor);
+            setBandColor(editedBook.bandColor);
+            setFont(editedBook.font);
         }
-    }, [editBook]);
+    }, [editedBook]);
 
     function handleDeleteBook() {
-        if (editBook !== null) return; 
+        if (bookIndex === undefined) return;
 
-        savedBooks.splice(parseInt(editBook), 1);
-        localStorage.setItem('books', JSON.stringify(savedBooks));
+        const updatedBooks = books.filter((_, index) => index !== bookIndex);
+        setBooks(updatedBooks);
         navigate('/bookshelf');
 
     }
@@ -145,8 +144,8 @@ export function Customize({ books, addBook }) {
 
             </svg>
 
-            <NavButton text="Add to bookshelf!" onClick={handleSaveBook} className="custom-btn"/>
-            <NavButton text="Delete Book" onClick={handleDeleteBook} className="delete-btn"/>
+            <NavButton text={editedBook ? "Save Changes" : "Add to bookshelf!"} onClick={handleSaveBook} className="custom-btn"/>
+            { editedBook && <NavButton text="Delete Book" onClick={handleDeleteBook} className="delete-btn"/> }
             
 
         </main>
