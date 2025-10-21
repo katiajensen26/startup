@@ -57,3 +57,12 @@ svg {
     justify-content: center;
     width: 100%;
 }
+
+.book-group .hover-text {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.book-group:hover .hover-text {
+    opacity: 1;
+}

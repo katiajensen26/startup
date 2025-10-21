@@ -144,8 +144,7 @@ export function Customize({ books, deleteBook, setBooks, addBook }) {
             </svg>
 
             <NavButton text={editedBook ? "Save Changes" : "Add to bookshelf!"} onClick={handleSaveBook} className="custom-btn"/>
-            <NavButton text="Delete Book" onClick={handleDeleteBook} className="delete-btn"/>
-            
+            {editedBook && <NavButton text="Delete Book" onClick={handleDeleteBook} className="delete-btn"/>}
 
         </main>
   );

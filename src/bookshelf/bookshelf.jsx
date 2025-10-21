@@ -77,13 +77,17 @@ export function Bookshelf({ books }) {
 
                      return (
                     
-                        <g key={`${shelfIndex}-${index}`}>
+                        <g key={`${shelfIndex}-${index}`} className="book-group">
                             <Link to={`/customize`} state={{ bookIndex: index }}>
                                 <rect x={bookX} y={bookY} width={bookWidth} height={bookHeight} fill={book.bookColor}></rect>
                                 <rect x={bookX} y={bookY+20} width={bookWidth} height='20' fill={book.bandColor}></rect>
                                 <rect x={bookX} y={bookY+160} width={bookWidth} height='20' fill={book.bandColor}></rect>
                             </Link>
                             <text x={centerX} y={centerY} className='book-label' transform={`rotate(-90, ${centerX}, ${centerY})`} fontFamily={book.font} fontSize={fitFontSize(book.title, book.font, 100, 20)} >{book.title}</text>
+                            <text x={centerX} y={centerY - 140} className="hover-text" fontFamily={book.font} fontSize="12" fill="black" textAnchor="middle">
+                                <tspan x={centerX} dy="1.2em">{book.title}</tspan>
+                                <tspan x={centerX} dy="1.2em">by {book.author}</tspan>
+                            </text>
                         </g>
                         );
                     });
