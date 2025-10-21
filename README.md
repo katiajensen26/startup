@@ -113,8 +113,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [x] **All functionality implemented or mocked out** - Everything is working. Books are currently stored in localStorage.
+- [x] **Hooks** - used useEffect and useState on my bookshelf page and customize page.
 
 ## 🚀 Service deliverable
 
