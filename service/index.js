@@ -76,6 +76,13 @@ apiRouter.post('/bookshelf', verifyAuth, async (req, res) => {
     res.send(bookshelfByUser[user.email]);
 });
 
+apiRouter.delete('/bookshelf', verifyAuth, async (req, res) => {
+    const user = await findUser('tooken', req.cookies[authCookieName]);
+    const userBookshelf = bookshelfByUser[user.email];
+    bookshelfByUser[user.email] = deleteFromBookshelf(req.body, userBookshelf);
+    res.send(bookshelfByUser[user.email])
+})
+
 app.use(function (err, req, res, next) {
     res.status(500).send({ type: err.name, message: err.message });
 });
@@ -96,6 +103,19 @@ function updateBookshelf(newBook, userBookshelf) {
 
     if (!found) {
         userBookshelf.push(newBook);
+    }
+
+    return userBookshelf;
+}
+
+function deleteFromBookshelf(reqBook, userBookshelf) {
+    let found = false;
+    for (const [i, prevBook] of userBookshelf.entries()) {
+        if (prevBook.id === reqBook.id) {
+            userBookshelf.delete(reqBook);
+            found = true;
+            break;
+        }
     }
 
     return userBookshelf;
