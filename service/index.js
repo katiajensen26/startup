@@ -14,6 +14,10 @@ let bookshelves = [];
 let apiRouter = express.Router();
 app.use('/api', apiRouter);
 
+const authCookieName = 'token';
+
+app.use(cookieParser());
+
 apiRouter.post('/auth/create', async (req, res) => {
     if (await findUser('email', req.body.email)) {
         res.status(409).send({msg: 'Existing user'});
