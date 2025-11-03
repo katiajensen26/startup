@@ -1,6 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const uuid = require('uuid');
 const app = express();
 
@@ -66,6 +66,27 @@ app.use((_req, res) => {
     res.sendFile('index.html', { root: 'public' });
 });
 
+async function createUser(email, password) {
+    const passwordHash = await bcrypt.hash(password, 10);
+
+    const user = { email: email, password: passwordHash, token: uuid.v4(), };
+    users.push(user);
+    return user;
+}
+
+async function findUser(field, value) {
+    if (!value) return null;
+
+    return users.find((u) => u[field] === value);
+}
+
+function setAuthCookie(res, authToken) {
+    res.cookie(authCookieName, authToken, {
+        secure: true,
+        httpOnly: true,
+        sameSite: 'strict',
+    });
+}
 
 app.listen(port, () => {
     console.log(`Listening on port ${port}`);
