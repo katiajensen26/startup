@@ -9,7 +9,7 @@ const port = process.argv.length > 2 ? process.argv[2] : 3000;
 app.use(express.json());
 
 let users = [];
-let bookshelves = [];
+let bookshelfByUser = {};
 
 let apiRouter = express.Router();
 app.use('/api', apiRouter);
@@ -62,7 +62,19 @@ const verifyAuth = async (req, res, next) => {
     }
 };
 
-//Add bookshelf stuff here?
+//Gets user-specific bookshelf for authenticated user
+apiRouter.get('/bookshelf', verifyAuth, async (req, res) => {
+    const user = await findUser('token', req.cookies[authCookieName]);
+    res.send(bookshelfByUser[user.email] || []);
+});
+
+//Stores bookshelf for authenticated user
+apiRouter.post('/bookshelf', verifyAuth, async (req, res) => {
+    const user = await findUser('token', req.cookies[authCookieName]);
+    const userBookshelf = bookshelfByUser[user.email] || [];
+    bookshelfByUser[user.email] = updateBookshelf(req.body, userBookshelf);
+    res.send(bookshelfByUser[user.email]);
+});
 
 app.use(function (err, req, res, next) {
     res.status(500).send({ type: err.name, message: err.message });
@@ -71,6 +83,23 @@ app.use(function (err, req, res, next) {
 app.use((_req, res) => {
     res.sendFile('index.html', { root: 'public' });
 });
+
+function updateBookshelf(newBook, userBookshelf) {
+    let found = false;
+    for(const [i, prevBook] of userBookshelf.entries()) {
+        if (prevBook.id === newBooks.id) {
+            userBookshelf[i] = newBook;
+            found = true;
+            break;
+        }
+    }
+
+    if (!found) {
+        userBookshelf.push(newBook);
+    }
+
+    return userBookshelf;
+}
 
 async function createUser(email, password) {
     const passwordHash = await bcrypt.hash(password, 10);
