@@ -25,12 +25,39 @@ export default function App() {
     }, [books]);
 
     function addBook(newBook) {
-        setBooks((prevBooks) => [...prevBooks, newBook]);
+        setBooks((prevBooks) => {
+            const updatedBooks = [...prevBooks, newBook];
+            saveBookshelf(updatedBooks);
+            return updatedBooks;
+        });
     }
 
     function deleteBook(index) {
-        const updatedBooks = books.filter((_, i) => i !== index);
-        setBooks(updatedBooks);
+        setBooks((prevBooks) => {
+            const updatedBooks = prevBooks.filter((_, i) => i !== index);
+            saveBookshelf(updatedBooks);
+            return updatedBooks;
+        });
+    }
+
+    async function getBookshelf() {
+        const result = await fetch('/api/bookshelf', {
+            method: 'GET',
+            credentials: 'include',
+        });
+        if (result.ok) {
+            const data = await result.json();
+            setBooks(data);
+        }
+    }
+
+    async function saveBookshelf(updatedBooks) {
+        const result = await fetch('/api/bookshelf', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(updatedBooks),
+        });
     }
 
   return (
@@ -72,6 +99,9 @@ export default function App() {
                     onAuthChange={(userName, authState) => {
                         setAuthState(authState);
                         setUsername(userName);
+                        if (authState === AuthState.Authenticated) {
+                            fetchBookshelf();
+                        }
                     }}
                     />
                 } />
