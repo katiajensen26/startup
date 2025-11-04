@@ -22,22 +22,15 @@ export default function App() {
 
     React.useEffect(() => {
         localStorage.setItem('bookshelf', JSON.stringify(books));
+        saveBookshelf(books);
     }, [books]);
 
     function addBook(newBook) {
-        setBooks((prevBooks) => {
-            const updatedBooks = [...prevBooks, newBook];
-            saveBookshelf(updatedBooks);
-            return updatedBooks;
-        });
+        setBooks(prevBooks => [...prevBooks, newBook]);
     }
 
     function deleteBook(index) {
-        setBooks((prevBooks) => {
-            const updatedBooks = prevBooks.filter((_, i) => i !== index);
-            saveBookshelf(updatedBooks);
-            return updatedBooks;
-        });
+        setBooks(prevBooks => prevBooks.filter((_, i) => i !== index));
     }
 
     async function getBookshelf() {
@@ -100,7 +93,7 @@ export default function App() {
                         setAuthState(authState);
                         setUsername(userName);
                         if (authState === AuthState.Authenticated) {
-                            fetchBookshelf();
+                            getBookshelf();
                         }
                     }}
                     />

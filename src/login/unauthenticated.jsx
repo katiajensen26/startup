@@ -9,13 +9,11 @@ export function Unauthenticated(props) {
     const [displayError, setDisplayError] = React.useState(null);
 
     async function loginUser() {
-        localStorage.setItem('userName', userName);
-        props.onLogin(userName);
+        loginOrCreate('/api/auth/login');
     }
 
     async function createUser() {
-        localStorage.setItem('userName', userName);
-        props.onLogin(userName);
+        loginOrCreate('/api/auth/create');
     }
 
     async function loginOrCreate(endpoint) {
@@ -31,7 +29,7 @@ export function Unauthenticated(props) {
             props.onLogin(userName);
         } else {
             const body = await response.json();
-            setDisplayError(`Error ${body.msg}`);
+            setDisplayError(`⚠ Error: ${body.msg}`);
         }
     }
 

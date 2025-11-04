@@ -8,7 +8,7 @@ export function MessageDialog(props) {
         <Modal {...props} show={props.message} centered>
             <Modal.Body>{props.message}</Modal.Body>
             <Modal.Footer>
-                <NavButton onClick={props.onHide}>Close</NavButton>
+                <NavButton text='Close' onClick={props.onHide} className='login-btn'></NavButton>
             </Modal.Footer>
         </Modal>
     )
