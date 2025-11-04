@@ -22,15 +22,33 @@ export default function App() {
 
     React.useEffect(() => {
         localStorage.setItem('bookshelf', JSON.stringify(books));
-        saveBookshelf(books);
     }, [books]);
 
-    function addBook(newBook) {
-        setBooks(prevBooks => [...prevBooks, newBook]);
+    async function addBook(newBook) {
+        const result = await fetch('api/bookshelf', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(newBook),
+        });
+
+        setBooks(prevBook => {
+            const index = prevBook.findIndex(b => b.id === newBook.id);
+            if (index !== -1) prevBook[index] = newBook;
+            else prevBook.push(newBook);
+            return [...prevBook];
+        });
     }
 
-    function deleteBook(index) {
-        setBooks(prevBooks => prevBooks.filter((_, i) => i !== index));
+    async function deleteBook(index) {
+        await fetch('/api/bookshelf', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ bookIndex: index }),
+        });
+
+        setBooks(prevBooks => prevBooks.filter(b => b.bookIndex !== index));
     }
 
     async function getBookshelf() {
@@ -99,7 +117,7 @@ export default function App() {
                     />
                 } />
                 <Route path='/bookshelf' element={<Bookshelf books={books} deleteBook={deleteBook} />} />
-                <Route path='/customize' element={<Customize books={books} setBooks={setBooks} addBook={addBook} deleteBook={deleteBook} />} />
+                <Route path='/customize' element={<Customize books={books} setBooks={setBooks} addBook={addBook} deleteBook={deleteBook}/>} />
                 <Route path='/friends' element={<Friends />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>

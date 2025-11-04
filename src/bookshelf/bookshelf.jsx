@@ -16,8 +16,17 @@ export function Bookshelf({ books }) {
     }
 
     React.useEffect(() => {
-        const savedName = localStorage.getItem('bookshelfName');
-        if (savedName) {setBookshelfName(savedName);}
+        async function getBookshelf() {
+            const result = await fetch('api/bookshelf', {
+                method: 'GET',
+                credentials: 'include',
+            });
+            if (result.ok) {
+                const data = await result.json();
+                setBooks(data);
+            }
+        }
+        getBookshelf();
     }, []);
 
     function handleBookshelfShare() {

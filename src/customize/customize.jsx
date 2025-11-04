@@ -3,7 +3,7 @@ import './customize.css';
 import { NavButton } from '../app';
 import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
 
-export function Customize({ books, deleteBook, setBooks, addBook }) {
+export function Customize({ books, deleteBook, setBooks, addBook, saveBook }) {
     const bookLocation = useLocation();
     const navigate = useNavigate();
     const bookIndex = bookLocation.state?.bookIndex;
@@ -14,12 +14,6 @@ export function Customize({ books, deleteBook, setBooks, addBook }) {
     const [bookColor, setBookColor] = React.useState(editedBook ? editedBook.bookColor : '#2791c2');
     const [bandColor, setBandColor] = React.useState(editedBook ? editedBook.bandColor : '#fcdc42');
     const [font, setFont] = React.useState(editedBook ? editedBook.font : 'Merriweather');
-
-    // const [searchParams] = useSearchParams();
-    // const editBook = searchParams.get('edit');
-    // const savedBooks = JSON.parse(localStorage.getItem('books')) || [];
-
-    // const book = bookIndex !== null ? savedBooks[bookIndex] : null;
 
     function changeBookColor(direction) {
         const bookColors = ['#2791c2', '#0d60a8', '#bb2bcc', '#a80d60', '#ff7de7', '#d93025', '#e07431ff', '#e0a614', '#34a853', '#2f4f0fff', '#b0a8a8ff', '#000000'];
