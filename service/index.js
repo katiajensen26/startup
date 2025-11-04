@@ -25,7 +25,7 @@ apiRouter.post('/auth/create', async (req, res) => {
         res.status(409).send({msg: 'Existing user'});
     } else {
         const user = await createUser(req.body.email, req.body.password);
-
+        bookshelfByUser[user.email] = [];
         setAuthCookie(res, user.token);
         res.send({ email: user.email });
     }
@@ -76,11 +76,19 @@ apiRouter.post('/bookshelf', verifyAuth, async (req, res) => {
     res.send(bookshelfByUser[user.email]);
 });
 
+//deletes book from bookshelf
 apiRouter.delete('/bookshelf', verifyAuth, async (req, res) => {
-    const user = await findUser('tooken', req.cookies[authCookieName]);
-    const userBookshelf = bookshelfByUser[user.email];
+    const user = await findUser('token', req.cookies[authCookieName]);
+    const userBookshelf = bookshelfByUser[user.email] || [];
     bookshelfByUser[user.email] = deleteFromBookshelf(req.body, userBookshelf);
     res.send(bookshelfByUser[user.email])
+})
+
+apiRouter.put('/bookshelf', verifyAuth, async (req, res) => {
+    const user = await findUser('token', req.cookies[authCookieName]);
+    const userBookshelf = bookshelfByUser[user.email] || [];
+    bookshelfByUser[user.email] = updateBookshelf(req.body, userBookshelf);
+    res.send(bookshelfByUser[user.email]);
 })
 
 app.use(function (err, req, res, next) {
@@ -94,7 +102,7 @@ app.use((_req, res) => {
 function updateBookshelf(newBook, userBookshelf) {
     let found = false;
     for(const [i, prevBook] of userBookshelf.entries()) {
-        if (prevBook.id === newBooks.id) {
+        if (prevBook.id === newBook.id) {
             userBookshelf[i] = newBook;
             found = true;
             break;
@@ -109,16 +117,7 @@ function updateBookshelf(newBook, userBookshelf) {
 }
 
 function deleteFromBookshelf(reqBook, userBookshelf) {
-    let found = false;
-    for (const [i, prevBook] of userBookshelf.entries()) {
-        if (prevBook.id === reqBook.id) {
-            userBookshelf.delete(reqBook);
-            found = true;
-            break;
-        }
-    }
-
-    return userBookshelf;
+    return userBookshelf.filter(book => book.id !== reqBook.id);
 }
 
 async function createUser(email, password) {
