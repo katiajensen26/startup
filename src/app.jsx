@@ -25,7 +25,7 @@ export default function App() {
     }, [books]);
 
     async function addBook(newBook) {
-        const result = await fetch('api/bookshelf', {
+        const result = await fetch(`api/bookshelf`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -41,7 +41,7 @@ export default function App() {
     }
 
     async function deleteBook(index) {
-        await fetch('/api/bookshelf', {
+        await fetch(`/api/bookshelf`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -52,11 +52,11 @@ export default function App() {
     }
 
     async function getBookshelf() {
-        const result = await fetch('/api/bookshelf', {
+        const result = await fetch(`/api/bookshelf`, {
             method: 'GET',
             credentials: 'include',
         });
-        if (result.ok) {
+        if (result?.status === 200) {
             const data = await result.json();
             setBooks(data);
         }

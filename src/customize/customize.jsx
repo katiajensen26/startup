@@ -1,4 +1,4 @@
-import React, { use } from 'react';
+import React from 'react';
 import './customize.css';
 import { NavButton } from '../app';
 import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
@@ -63,8 +63,9 @@ export function Customize({ books, deleteBook, setBooks, addBook, saveBook }) {
         return size;
     }
 
-    function handleSaveBook() {
+    async function handleSaveBook() {
         const newBook = {
+            id: crypto.randomUUID(),
             title,
             author,
             bookColor,
@@ -78,7 +79,7 @@ export function Customize({ books, deleteBook, setBooks, addBook, saveBook }) {
             );
             setBooks(updatedBooks);
         } else {
-            addBook(newBook);
+            if (addBook) await addBook(newBook);
         }
         navigate('/bookshelf');
     }
@@ -93,10 +94,10 @@ export function Customize({ books, deleteBook, setBooks, addBook, saveBook }) {
         }
     }, [editedBook]);
 
-    function handleDeleteBook() {
+    async function handleDeleteBook() {
         if (bookIndex === undefined) return;
 
-        deleteBook(bookIndex);
+        if (deleteBook) await deleteBook(bookIndex);
         navigate('/bookshelf');
 
     }
@@ -105,7 +106,7 @@ export function Customize({ books, deleteBook, setBooks, addBook, saveBook }) {
         <main className="customize-page">
             <form>
                 <div>
-                    <label htmlFor="title" style={{"margin-top": "1em"}}>Book Title:</label>
+                    <label htmlFor="title" style={{"marginTop": "1em"}}>Book Title:</label>
                     <input type="text" id="title" value={title} onChange={(e => setTitle(e.target.value))} placeholder="Enter the book title" size="25" required/>
                 </div>
 

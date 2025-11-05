@@ -17,7 +17,7 @@ export function Bookshelf({ books }) {
 
     React.useEffect(() => {
         async function getBookshelf() {
-            const result = await fetch('api/bookshelf', {
+            const result = await fetch(`/api/bookshelf`, {
                 method: 'GET',
                 credentials: 'include',
             });
