@@ -3,7 +3,7 @@ import './bookshelf.css';
 import { NavButton } from '../app';
 import { Link } from 'react-router-dom';
 
-export function Bookshelf({ books }) {
+export function Bookshelf({ books, setBooks }) {
     const [bookshelfName, setBookshelfName] = React.useState('');
 
     function handleSave() {

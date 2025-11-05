@@ -12,11 +12,10 @@ let users = [];
 let bookshelfByUser = {};
 
 let apiRouter = express.Router();
+app.use(cookieParser());
 app.use('/api', apiRouter);
 
 const authCookieName = 'token';
-
-app.use(cookieParser());
 
 app.use(express.static('public'));
 
@@ -70,14 +69,18 @@ apiRouter.post('/auth/login', async (req, res) => {
 });
 
 apiRouter.delete('/auth/logout', async (req, res) => {
-    console.log("Reached the logout backend");
-    const user = await findUser('token', req.cookies[authCookieName]);
-    if (user) {
-        delete user.token;
-        console.log("Successful logout");
+    try {
+        console.log("Reached the logout backend");
+        const user = await findUser('token', req.cookies['token']);
+        if (user) {
+            delete user.token;
+            console.log("Successful logout");
+        }
+        res.clearCookie(authCookieName);
+        res.status(204).end();
+    } catch (Error) {
+        res.status(500).send[{Error}];
     }
-    res.clearCookie(authCookieName);
-    res.status(204).end();
 });
 
 const verifyAuth = async (req, res, next) => {
@@ -113,6 +116,7 @@ apiRouter.delete('/bookshelf', verifyAuth, async (req, res) => {
     const user = await findUser('token', req.cookies[authCookieName]);
     const userBookshelf = bookshelfByUser[user.email] || [];
     bookshelfByUser[user.email] = deleteFromBookshelf(req.body, userBookshelf);
+    console.log('successful delete');
     res.send(bookshelfByUser[user.email])
 })
 

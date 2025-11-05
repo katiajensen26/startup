@@ -116,7 +116,7 @@ export default function App() {
                     }}
                     />
                 } />
-                <Route path='/bookshelf' element={<Bookshelf books={books} deleteBook={deleteBook} />} />
+                <Route path='/bookshelf' element={<Bookshelf books={books} deleteBook={deleteBook} setBooks={setBooks}/>} />
                 <Route path='/customize' element={<Customize books={books} setBooks={setBooks} addBook={addBook} deleteBook={deleteBook}/>} />
                 <Route path='/friends' element={<Friends />} />
                 <Route path='*' element={<NotFound />} />
