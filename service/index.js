@@ -25,28 +25,24 @@ const authCookieName = 'token';
 app.use(express.static('public'));
 
 apiRouter.post('/auth/create', async (req, res) => {
-    console.log('Reached the create backend.');
     if (await findUser('email', req.body.email)) {
         res.status(409).send({ msg: 'Existing user' });
     } else {
         const user = await createUser(req.body.email, req.body.password);
         bookshelfByUser[user.email] = { name: '', books: []};
         setAuthCookie(res, user.token);
-        console.log("Successful create");
 
         res.send({ email: user.email });
     }
 });
 
 apiRouter.post('/auth/login', async (req, res) => {
-    console.log('Reached the login backend');
   const user = await findUser('email', req.body.email);
   if (user) {
     if (await bcrypt.compare(req.body.password, user.password)) {
       user.token = uuid.v4();
       setAuthCookie(res, user.token);
       res.send({ email: user.email });
-      console.log("Successful login");
       return;
     }
   }
@@ -55,11 +51,9 @@ apiRouter.post('/auth/login', async (req, res) => {
 
 apiRouter.delete('/auth/logout', async (req, res) => {
     try {
-        console.log("Reached the logout backend");
         const user = await findUser('token', req.cookies['token']);
         if (user) {
             delete user.token;
-            console.log("Successful logout");
         }
         res.clearCookie(authCookieName);
         res.status(204).end();
@@ -69,13 +63,9 @@ apiRouter.delete('/auth/logout', async (req, res) => {
 });
 
 const verifyAuth = async (req, res, next) => {
-    console.log("Reached the verifyAuth backend");
-    console.log("Current cookies", req.cookies);
-    console.log("current users:", users);
     const user = await findUser('token', req.cookies['token']);
     if (user) {
         next();
-        console.log("Successful verification");
     } else {
         res.status(401).send({ msg: 'Unauthorized' });
     }
@@ -83,14 +73,12 @@ const verifyAuth = async (req, res, next) => {
 
 //Gets user-specific bookshelf for authenticated user
 apiRouter.get('/bookshelf', verifyAuth, async (req, res) => {
-    console.log("Reached get bookshelf backend");
     const user = await findUser('token', req.cookies[authCookieName]);
     res.send(bookshelfByUser[user.email] || { name: '', books: []});
 });
 
 //Stores bookshelf for authenticated user
 apiRouter.post('/bookshelf', verifyAuth, async (req, res) => {
-    console.log("reached the store bookshelf backend");
     const user = await findUser('token', req.cookies[authCookieName]);
     const userBookshelf = bookshelfByUser[user.email] || [];
     bookshelfByUser[user.email] = updateBookshelf(req.body, userBookshelf);
@@ -99,13 +87,9 @@ apiRouter.post('/bookshelf', verifyAuth, async (req, res) => {
 
 //deletes book from bookshelf
 apiRouter.delete('/bookshelf', verifyAuth, async (req, res) => {
-    console.log("reached delete book backend");
-    console.log("Cookies received:", req.cookies);
-    console.log("Current users array:", users);
     const user = await findUser('token', req.cookies['token']);
     const userBookshelf = bookshelfByUser[user.email] || [];
     bookshelfByUser[user.email] = deleteFromBookshelf(req.body, userBookshelf);
-    console.log('successful delete');
     res.send(bookshelfByUser[user.email])
 })
 
@@ -161,7 +145,6 @@ function updateBookshelf(newBook, userBookshelf) {
 }
 
 function deleteFromBookshelf(reqBook, userBookshelf) {
-    console.log(reqBook.id);
     const books = userBookshelf.books || [];
     return {... userBookshelf, books: books.filter(book => book.id !== reqBook.id) };
 }
