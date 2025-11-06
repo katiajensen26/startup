@@ -40,15 +40,15 @@ export default function App() {
         });
     }
 
-    async function deleteBook(index) {
+    async function deleteBook(bookId) {
         await fetch(`/api/bookshelf`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
-            body: JSON.stringify({ bookIndex: index }),
+            body: JSON.stringify({ id: bookId }),
         });
 
-        setBooks(prevBooks => prevBooks.filter(b => b.bookIndex !== index));
+        setBooks(prevBooks => prevBooks.filter(b => b.id !== bookId));
     }
 
     async function getBookshelf() {

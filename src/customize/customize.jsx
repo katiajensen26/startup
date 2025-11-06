@@ -97,7 +97,7 @@ export function Customize({ books, deleteBook, setBooks, addBook, saveBook }) {
     async function handleDeleteBook() {
         if (bookIndex === undefined) return;
 
-        if (deleteBook) await deleteBook(bookIndex);
+        if (deleteBook) await deleteBook(editedBook.id);
         navigate('/bookshelf');
 
     }

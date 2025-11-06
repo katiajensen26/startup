@@ -19,26 +19,6 @@ const authCookieName = 'token';
 
 app.use(express.static('public'));
 
-// apiRouter.post('/auth/create', async (req, res) => {
-//     console.log('Request body:', req.body);
-//     try {
-//         if (await findUser('email', req.body.email)) {
-//             res.status(409).send({msg: 'Existing user'});
-//         } else {
-//             const user = await createUser(req.body.email, req.body.password);
-//             //bookshelfByUser[user.email] = [];
-//             setAuthCookie(res, user.token);
-//             res.send({ email: user.email });
-//         }
-//     } catch (err) {
-//         console.error('Create user error:', err);
-//         return res.status(500).send({ msg: 'Internal server error' });
-//     }
-
-// });
-
-
-//temporary code to help debug
 apiRouter.post('/auth/create', async (req, res) => {
     console.log('Reached the create backend.');
     if (await findUser('email', req.body.email)) {
@@ -85,7 +65,9 @@ apiRouter.delete('/auth/logout', async (req, res) => {
 
 const verifyAuth = async (req, res, next) => {
     console.log("Reached the verifyAuth backend");
-    const user = await findUser('token', req.cookies[authCookieName]);
+    console.log("Current cookies", req.cookies);
+    console.log("current users:", users);
+    const user = await findUser('token', req.cookies['token']);
     if (user) {
         next();
         console.log("Successful verification");
@@ -113,7 +95,9 @@ apiRouter.post('/bookshelf', verifyAuth, async (req, res) => {
 //deletes book from bookshelf
 apiRouter.delete('/bookshelf', verifyAuth, async (req, res) => {
     console.log("reached delete book backend");
-    const user = await findUser('token', req.cookies[authCookieName]);
+    console.log("Cookies received:", req.cookies);
+    console.log("Current users array:", users);
+    const user = await findUser('token', req.cookies['token']);
     const userBookshelf = bookshelfByUser[user.email] || [];
     bookshelfByUser[user.email] = deleteFromBookshelf(req.body, userBookshelf);
     console.log('successful delete');
@@ -153,6 +137,7 @@ function updateBookshelf(newBook, userBookshelf) {
 }
 
 function deleteFromBookshelf(reqBook, userBookshelf) {
+    console.log(reqBook.id);
     return userBookshelf.filter(book => book.id !== reqBook.id);
 }
 
@@ -170,6 +155,7 @@ async function findUser(field, value) {
     return users.find((u) => u[field] === value);
 }
 
+//change this before deploying
 function setAuthCookie(res, authToken) {
     res.cookie(authCookieName, authToken, {
         secure: true,
