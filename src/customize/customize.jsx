@@ -65,7 +65,7 @@ export function Customize({ books, deleteBook, setBooks, addBook, saveBook }) {
 
     async function handleSaveBook() {
         const newBook = {
-            id: crypto.randomUUID(),
+            id: editedBook ? editedBook.id : crypto.randomUUID(),
             title,
             author,
             bookColor,
@@ -78,6 +78,8 @@ export function Customize({ books, deleteBook, setBooks, addBook, saveBook }) {
                 index === bookIndex ? newBook : book
             );
             setBooks(updatedBooks);
+
+            if (saveBook) await saveBook(newBook);
         } else {
             if (addBook) await addBook(newBook);
         }

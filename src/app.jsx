@@ -62,12 +62,12 @@ export default function App() {
         }
     }
 
-    async function saveBookshelf(updatedBooks) {
-        const result = await fetch('/api/bookshelf', {
-            method: 'POST',
+    async function saveBook(updatedBook) {
+        const result = await fetch(`/api/bookshelf`, {
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
-            body: JSON.stringify(updatedBooks),
+            body: JSON.stringify(updatedBook),
         });
     }
 
@@ -117,7 +117,7 @@ export default function App() {
                     />
                 } />
                 <Route path='/bookshelf' element={<Bookshelf books={books} deleteBook={deleteBook} setBooks={setBooks}/>} />
-                <Route path='/customize' element={<Customize books={books} setBooks={setBooks} addBook={addBook} deleteBook={deleteBook}/>} />
+                <Route path='/customize' element={<Customize books={books} setBooks={setBooks} addBook={addBook} deleteBook={deleteBook} saveBook={saveBook}/>} />
                 <Route path='/friends' element={<Friends />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>
