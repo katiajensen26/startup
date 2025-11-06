@@ -6,9 +6,13 @@ import { Link } from 'react-router-dom';
 export function Bookshelf({ books, setBooks }) {
     const [bookshelfName, setBookshelfName] = React.useState('');
 
-    function handleSave() {
-        localStorage.setItem('bookshelfName', bookshelfName);
-        placeholder = '';
+    async function handleSave() {
+        await fetch(`/api/bookshelf`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ name: bookshelfName, books }),
+        });
     }
 
     function handleBookshelfTitle(event) {
@@ -23,7 +27,8 @@ export function Bookshelf({ books, setBooks }) {
             });
             if (result.ok) {
                 const data = await result.json();
-                setBooks(data);
+                setBooks(data.books || []);
+                setBookshelfName(data.name || '');
             }
         }
         getBookshelf();

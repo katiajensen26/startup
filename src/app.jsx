@@ -14,11 +14,9 @@ export default function App() {
     const [userName, setUsername] = React.useState(localStorage.getItem('userName'));
     const currentAuthState = userName ? AuthState.Authenticated : AuthState.Unauthenticated;
     const [authState, setAuthState] = React.useState(currentAuthState);
+    const [bookshelfName, setBookshelfName] = React.useState('');
 
-    const [books, setBooks] = React.useState(() => {
-        const savedBooks = localStorage.getItem('bookshelf');
-        return savedBooks ? JSON.parse(savedBooks) : [];
-    });
+    const [books, setBooks] = React.useState([]);
 
     React.useEffect(() => {
         localStorage.setItem('bookshelf', JSON.stringify(books));
@@ -29,7 +27,7 @@ export default function App() {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
-            body: JSON.stringify(newBook),
+            body: JSON.stringify({book: newBook, name: bookshelfName}),
         });
 
         setBooks(prevBook => {
@@ -58,7 +56,8 @@ export default function App() {
         });
         if (result?.status === 200) {
             const data = await result.json();
-            setBooks(data);
+            setBooks(data.books || []);
+            setBookshelfName(data.name || '');
         }
     }
 
@@ -67,7 +66,7 @@ export default function App() {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
-            body: JSON.stringify(updatedBook),
+            body: JSON.stringify({ book: updatedBook, name: bookshelfName}),
         });
     }
 

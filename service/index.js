@@ -9,7 +9,12 @@ const port = process.argv.length > 2 ? process.argv[2] : 3000;
 app.use(express.json());
 
 let users = [];
-let bookshelfByUser = {};
+let bookshelfByUser = {
+    "user@email.com": {
+        name: "",
+        books: []
+    }
+};
 
 let apiRouter = express.Router();
 app.use(cookieParser());
@@ -25,7 +30,7 @@ apiRouter.post('/auth/create', async (req, res) => {
         res.status(409).send({ msg: 'Existing user' });
     } else {
         const user = await createUser(req.body.email, req.body.password);
-        bookshelfByUser[user.email] = [];
+        bookshelfByUser[user.email] = { name: '', books: []};
         setAuthCookie(res, user.token);
         console.log("Successful create");
 
@@ -80,7 +85,7 @@ const verifyAuth = async (req, res, next) => {
 apiRouter.get('/bookshelf', verifyAuth, async (req, res) => {
     console.log("Reached get bookshelf backend");
     const user = await findUser('token', req.cookies[authCookieName]);
-    res.send(bookshelfByUser[user.email] || []);
+    res.send(bookshelfByUser[user.email] || { name: '', books: []});
 });
 
 //Stores bookshelf for authenticated user
@@ -106,8 +111,23 @@ apiRouter.delete('/bookshelf', verifyAuth, async (req, res) => {
 
 apiRouter.put('/bookshelf', verifyAuth, async (req, res) => {
     const user = await findUser('token', req.cookies[authCookieName]);
-    const userBookshelf = bookshelfByUser[user.email] || [];
-    bookshelfByUser[user.email] = updateBookshelf(req.body, userBookshelf);
+    const userBookshelf = bookshelfByUser[user.email] || { name: '', books: [] };
+
+    const updateName = req.body.name ? req.body.name : userBookshelf.name;
+    const newBook = req.body.book;
+
+    let updateBooks = [...userBookshelf.books];
+
+    if (newBook) {
+        const index = updateBooks.findIndex(b => b.id === newBook.id);
+        if (index !== -1) {
+            updateBooks[index] = newBook;
+        } else {
+            updateBooks.push(newBook);
+        }
+    }
+
+    bookshelfByUser[user.email] = { name: updateName, books: updateBooks };
     res.send(bookshelfByUser[user.email]);
 })
 
@@ -120,25 +140,30 @@ app.use((_req, res) => {
 });
 
 function updateBookshelf(newBook, userBookshelf) {
+    const books = userBookshelf.books || [];
     let found = false;
-    for(const [i, prevBook] of userBookshelf.entries()) {
+    for(const [i, prevBook] of books.entries()) {
         if (prevBook.id === newBook.id) {
-            userBookshelf[i] = newBook;
+            books[i] = newBook;
             found = true;
             break;
         }
     }
 
     if (!found) {
-        userBookshelf.push(newBook);
+        books.push(newBook);
     }
 
-    return userBookshelf;
+    return {
+        name: userBookshelf.name || '',
+        books: books
+    };
 }
 
 function deleteFromBookshelf(reqBook, userBookshelf) {
     console.log(reqBook.id);
-    return userBookshelf.filter(book => book.id !== reqBook.id);
+    const books = userBookshelf.books || [];
+    return {... userBookshelf, books: books.filter(book => book.id !== reqBook.id) };
 }
 
 async function createUser(email, password) {
