@@ -34,10 +34,18 @@ export function Bookshelf({ books, setBooks }) {
         getBookshelf();
     }, []);
 
-    function handleBookshelfShare() {
-        const bookshelfURL = window.location.href; //placeholder until third party api is added
-        navigator.clipboard.writeText(bookshelfURL);
-        alert('Bookshelf URL copied to clipboard: ' + bookshelfURL);
+    async function handleBookshelfShare() {
+        const bookshelfURL = window.location.href;
+
+        const response = await fetch(`/api/shortenURL`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ longURL: bookshelfURL })
+        });
+
+        const data = await response.json();
+        await navigator.clipboard.writeText(data.shortURL);
+        alert('Bookshelf URL copied to clipboard: ' + data.shortURL);
     }
 
     function fitFontSize(text, font, maxWidth, baseSize = 80) {

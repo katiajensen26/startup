@@ -131,6 +131,22 @@ apiRouter.put('/bookshelf', verifyAuth, async (req, res) => {
     res.send(bookshelfByUser[user.email]);
 })
 
+apiRouter.post('/shortenURL', async (req, res) => {
+    console.log("Reached shortenURL Backend");
+    const { longURL } = req.body;
+
+    const encodedURL = encodeURIComponent(longURL.trim());
+
+    const apiURL = `https://ulvis.net/api.php?url=${encodedURL}&custom=${customName}&private=1&type=json`;
+
+    const response = await fetch(apiURL, {
+        method: 'GET'
+    });
+
+    const data = await response.json();
+    res.send({ shortURL: data.data.url});
+})
+
 app.use(function (err, req, res, next) {
     res.status(500).send({ type: err.name, message: err.message });
 });
