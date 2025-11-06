@@ -132,19 +132,23 @@ apiRouter.put('/bookshelf', verifyAuth, async (req, res) => {
 })
 
 apiRouter.post('/shortenURL', async (req, res) => {
-    console.log("Reached shortenURL Backend");
-    const { longURL } = req.body;
+    try {
+        console.log("Reached shortenURL backend.")
+        const { longURL } = req.body;
 
-    const encodedURL = encodeURIComponent(longURL.trim());
+        const encodedURL = encodeURIComponent(longURL.trim());
 
-    const apiURL = `https://ulvis.net/api.php?url=${encodedURL}&custom=${customName}&private=1&type=json`;
+        const response = await fetch('https://cleanuri.com/api/v1/shorten', {
+            method: 'POST',
+            headers: { 'Content-Type': 'x-www-form-urlencoded' },
+            body:  `url=${encodedURL}`
+        });
 
-    const response = await fetch(apiURL, {
-        method: 'GET'
-    });
-
-    const data = await response.json();
-    res.send({ shortURL: data.data.url});
+        const data = await response.json();
+        res.send({ shortURL: data.result_url});
+    } catch (Error) {
+        res.status(500).send[{Error}];
+    }
 })
 
 app.use(function (err, req, res, next) {
