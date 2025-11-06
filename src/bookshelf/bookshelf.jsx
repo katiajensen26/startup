@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 export function Bookshelf({ books, setBooks }) {
     const [bookshelfName, setBookshelfName] = React.useState('');
+    const [backgroundImage, setBackgroundImage] = React.useState('null');
 
     async function handleSave() {
         await fetch(`/api/bookshelf`, {
@@ -36,17 +37,23 @@ export function Bookshelf({ books, setBooks }) {
 
     async function handleBookshelfShare() {
         const bookshelfURL = window.location.href;
-
-        const response = await fetch(`/api/shortenURL`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ longURL: bookshelfURL })
-        });
-
-        const data = await response.json();
-        await navigator.clipboard.writeText(data.shortURL);
-        alert('Bookshelf URL copied to clipboard: ' + data.shortURL);
+        await navigator.clipboard.writeText(bookshelfURL);
+        alert('Bookshelf URL copied to clipboard: ' + bookshelfURL);
     }
+
+    React.useEffect(() => {
+        const random = Math.floor(Math.random() * 1000);
+            fetch(`https://picsum.photos/v2/list?page=${random}&limit=1`)
+      .then((response) => response.json())
+      .then((data) => {
+
+        const width = 700;
+        const height = 100;
+        const apiUrl = `https://picsum.photos/id/${data[0].id}/${width}/${height}?grayscale`;
+        setBackgroundImage(apiUrl);
+      })
+      .catch();
+    }, []);
 
     function fitFontSize(text, font, maxWidth, baseSize = 80) {
         const canvas = document.createElement('canvas');
@@ -62,6 +69,9 @@ export function Bookshelf({ books, setBooks }) {
 
     return (
         <main className="container-fluid d-flex flex-column align-items-center">
+            {backgroundImage && (
+                <img src={backgroundImage} alt="Background Image" className="banner"/>
+            )}
             <div className="text-center">
                 <label htmlFor="name">Bookshelf Name:</label>
                 <input type="text" id="name" name="name" placeholder={bookshelfName ? '' : "Enter your bookshelf title"} size="30" value={bookshelfName} onChange={handleBookshelfTitle} />

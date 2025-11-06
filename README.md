@@ -120,12 +120,12 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Supports registration, login, logout, and restricted endpoint** - I did not complete this part of the deliverable.
+- [x] **Node.js/Express HTTP service** - Uses node.js and express to connect the frontend to the backend
+- [x] **Static middleware for frontend** - There's static middleware to connect the frontend to the backend
+- [x] **Calls to third party endpoints** - Calls a third party api to display a new picture banner above the Bookshelf every time you return to the page.
+- [x] **Backend service endpoints** - Endpoints for login, logout, create and getting and saving the bookshelf.
+- [x] **Frontend calls service endpoints** - Frontend calls the backend service points to actually have a sort of persistence between user bookshelves.
+- [x] **Supports registration, login, logout, and restricted endpoint** - Has end points for all authorization methods.
 
 
 ## 🚀 DB deliverable
