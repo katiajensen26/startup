@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
 const uuid = require('uuid');
 const app = express();
+const DB = require('./database.js');
 
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
 
@@ -153,14 +154,17 @@ async function createUser(email, password) {
     const passwordHash = await bcrypt.hash(password, 10);
 
     const user = { email: email, password: passwordHash, token: uuid.v4(), };
-    users.push(user);
+    await DB.addUser(user);
     return user;
 }
 
 async function findUser(field, value) {
     if (!value) return null;
 
-    return users.find((u) => u[field] === value);
+    if (field === 'token') {
+        return DB.getUserByToken(value);
+    }
+    return DB.getUser(value);
 }
 
 //change this before deploying
