@@ -5,7 +5,7 @@ const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostna
 const client = new MongoClient(url);
 const db = client.db('MyBookshelf');
 const userCollection = db.collection('users');
-const Bookshelves = db.collection('bookshelves');
+const bookshelves = db.collection('bookshelves');
 
 (async function testConnection() {
     try {
@@ -33,11 +33,11 @@ async function updateUser(user) {
 }
 
 async function getBookshelfByUser(user) {
-    await Bookshelves.findOne({ email: user.email });
+    return await bookshelves.findOne({ email: user.email });
 }
 
 async function getBookshelfbyShareId(shareID) {
-    await Bookshelves.findOne({ shareID });
+    return await bookshelves.findOne({ shareID });
 }
 
 async function createOrUpdateBookshelf(user, bookshelfData) {
@@ -51,7 +51,18 @@ async function createOrUpdateBookshelf(user, bookshelfData) {
             email: user.email,
             shareID: bookshelfData.shareID || generateShareId()
         }
+    };
+
+    await bookshelves.updateOne({ email: user.email }, update, { upsert: true });
+}
+
+function generateShareId() {
+    result = '';
+    while (result.length < 10) {
+        result += Math.random().toString(36).substring(2);
     }
+
+    return result.substring(0, 10);
 }
 
 module.exports = {
