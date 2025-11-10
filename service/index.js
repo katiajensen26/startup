@@ -124,30 +124,37 @@ app.use((_req, res) => {
     res.sendFile('index.html', { root: 'public' });
 });
 
-function updateBookshelf(newBook, userBookshelf) {
-    const books = userBookshelf.books || [];
-    let found = false;
-    for(const [i, prevBook] of books.entries()) {
-        if (prevBook.id === newBook.id) {
-            books[i] = newBook;
-            found = true;
-            break;
-        }
+async function updateBookshelf(user, newBook) {
+    let bookshelf = await DB.getBookshelfByUser(user);
+
+    if (!bookshelf) {
+        bookshelf = { shelfName: 'My Bookshelf', books: [], isPublic: true };
     }
 
-    if (!found) {
-        books.push(newBook);
+    const books = bookshelf.books || [];
+    const index = books.findIndex(b => b.id === newBook.id);
+
+    if (index !== -1) {
+        books[index] = newBook;
+    } else {
+        books.push(index);
     }
 
-    return {
-        name: userBookshelf.name || '',
-        books: books
-    };
+    const updatedBooks = { ...bookshelf, books };
+    await DB.createOrUpdateBookshelf(user, updatedBooks);
+
+    return updatedBooks;
 }
 
-function deleteFromBookshelf(reqBook, userBookshelf) {
+async function deleteFromBookshelf(user, reqBook) {
+    const bookshelf = await DB.getBookshelfByUser(user);
+
     const books = userBookshelf.books || [];
-    return {... userBookshelf, books: books.filter(book => book.id !== reqBook.id) };
+    const updatedBooks = { ...bookshelf, books: books.filter(book => book.id !== reqBook.id)};
+    
+    await DB.createOrUpdateBookshelf(user, updatedBooks);
+
+    return updatedBooks;
 }
 
 async function createUser(email, password) {
@@ -167,7 +174,6 @@ async function findUser(field, value) {
     return DB.getUser(value);
 }
 
-//change this before deploying
 function setAuthCookie(res, authToken) {
     res.cookie(authCookieName, authToken, {
         secure: true,
