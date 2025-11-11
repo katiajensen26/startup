@@ -9,14 +9,6 @@ const port = process.argv.length > 2 ? process.argv[2] : 3000;
 
 app.use(express.json());
 
-let users = [];
-let bookshelfByUser = {
-    "user@email.com": {
-        name: "",
-        books: []
-    }
-};
-
 let apiRouter = express.Router();
 app.use(cookieParser());
 app.use('/api', apiRouter);
@@ -42,6 +34,7 @@ apiRouter.post('/auth/login', async (req, res) => {
   if (user) {
     if (await bcrypt.compare(req.body.password, user.password)) {
       user.token = uuid.v4();
+      await DB.updateUser(user);
       setAuthCookie(res, user.token);
       res.send({ email: user.email });
       return;
@@ -75,45 +68,41 @@ const verifyAuth = async (req, res, next) => {
 //Gets user-specific bookshelf for authenticated user
 apiRouter.get('/bookshelf', verifyAuth, async (req, res) => {
     const user = await findUser('token', req.cookies[authCookieName]);
-    res.send(bookshelfByUser[user.email] || { name: '', books: []});
+    const currentBookshelf = await DB.getBookshelfByUser(user);
+    res.send(currentBookshelf || { shelfName: '', books: [] });
 });
 
 //Stores bookshelf for authenticated user
 apiRouter.post('/bookshelf', verifyAuth, async (req, res) => {
     const user = await findUser('token', req.cookies[authCookieName]);
-    const userBookshelf = bookshelfByUser[user.email] || [];
-    bookshelfByUser[user.email] = updateBookshelf(req.body, userBookshelf);
-    res.send(bookshelfByUser[user.email]);
+    const currentBookshelf = await updateBookshelf(user, req.body);
+    res.send(currentBookshelf);
 });
 
 //deletes book from bookshelf
 apiRouter.delete('/bookshelf', verifyAuth, async (req, res) => {
     const user = await findUser('token', req.cookies['token']);
-    const userBookshelf = bookshelfByUser[user.email] || [];
-    bookshelfByUser[user.email] = deleteFromBookshelf(req.body, userBookshelf);
-    res.send(bookshelfByUser[user.email])
+    const currentBookshelf = await deleteFromBookshelf(user, req.body);
+    res.send(currentBookshelf);
 })
 
 apiRouter.put('/bookshelf', verifyAuth, async (req, res) => {
     const user = await findUser('token', req.cookies[authCookieName]);
-    const userBookshelf = bookshelfByUser[user.email] || { name: '', books: [] };
-
-    const updateName = req.body.name ? req.body.name : userBookshelf.name;
-    const newBook = req.body.book;
-
-    let updateBooks = [...userBookshelf.books];
-
-    if (newBook) {
-        const index = updateBooks.findIndex(b => b.id === newBook.id);
-        if (index !== -1) {
-            updateBooks[index] = newBook;
-        } else {
-            updateBooks.push(newBook);
-        }
+    if (!user) {
+        res.status(401).send({ msg: 'unauthorized'});
     }
 
-    bookshelfByUser[user.email] = { name: updateName, books: updateBooks };
-    res.send(bookshelfByUser[user.email]);
+    const bookshelfData = {
+        name: req.body.shelfName,
+        books: req.body.books,
+        isPublic: req.body.isPublic,
+    };
+
+    await DB.createOrUpdateBookshelf(user, bookshelfData);
+    const updatedShelf = await DB.getBookshelfByUser(user);
+
+    res.send(updatedShelf);
+
 })
 
 app.use(function (err, req, res, next) {
@@ -137,7 +126,7 @@ async function updateBookshelf(user, newBook) {
     if (index !== -1) {
         books[index] = newBook;
     } else {
-        books.push(index);
+        books.push(newBook);
     }
 
     const updatedBooks = { ...bookshelf, books };
@@ -149,7 +138,7 @@ async function updateBookshelf(user, newBook) {
 async function deleteFromBookshelf(user, reqBook) {
     const bookshelf = await DB.getBookshelfByUser(user);
 
-    const books = userBookshelf.books || [];
+    const books = bookshelf.books || [];
     const updatedBooks = { ...bookshelf, books: books.filter(book => book.id !== reqBook.id)};
     
     await DB.createOrUpdateBookshelf(user, updatedBooks);
