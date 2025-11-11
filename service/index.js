@@ -100,6 +100,7 @@ apiRouter.put('/bookshelf', verifyAuth, async (req, res) => {
     if (!user) {
         res.status(401).send({ msg: 'unauthorized'});
     }
+    
 
     const bookshelfData = {
         shelfName: req.body.shelfName,
@@ -112,6 +113,11 @@ apiRouter.put('/bookshelf', verifyAuth, async (req, res) => {
 
     res.send(updatedShelf);
 
+})
+
+apiRouter.get('/bookshelf/share/:shareID', async (req, res) => {
+    const friendShelf = await DB.getBookshelfbyShareId(req.params.shareID);
+    res.send(friendShelf);
 })
 
 app.use(function (err, req, res, next) {
