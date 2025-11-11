@@ -4,9 +4,9 @@ import { NavButton } from '../app';
 import { Link, useLocation } from 'react-router-dom';
 
 export function Bookshelf({ books, setBooks }) {
-    const location = useLocation();
     const [bookshelfName, setBookshelfName] = React.useState('');
     const [backgroundImage, setBackgroundImage] = React.useState(null);
+    const [shareID, setShareID] = React.useState('');
 
     async function handleSave() {
         await fetch(`/api/bookshelf`, {
@@ -32,13 +32,14 @@ export function Bookshelf({ books, setBooks }) {
                 const data = await result.json();
                 setBooks(data.books || []);
                 setBookshelfName(data.shelfName || 'My Bookshelf');
+                setShareID(data.shareID || '');
             }
         }
         getBookshelf();
     }, []);
 
     async function handleBookshelfShare() {
-        const bookshelfURL = window.location.href;
+        const bookshelfURL = `${window.location.origin}/bookshelf/share/${shareID}`;
         await navigator.clipboard.writeText(bookshelfURL);
         alert('Bookshelf URL copied to clipboard: ' + bookshelfURL);
     }
