@@ -27,14 +27,15 @@ export default function App() {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
-            body: JSON.stringify({book: newBook, name: bookshelfName}),
+            body: JSON.stringify({books: newBook, shelfName: bookshelfName}),
         });
 
         setBooks(prevBook => {
             const index = prevBook.findIndex(b => b.id === newBook.id);
+            const updatedShelf = [... prevBook];
             if (index !== -1) prevBook[index] = newBook;
-            else prevBook.push(newBook);
-            return [...prevBook];
+            else updatedShelf.push(newBook);
+            return updatedShelf;
         });
     }
 
@@ -57,7 +58,7 @@ export default function App() {
         if (result?.status === 200) {
             const data = await result.json();
             setBooks(data.books || []);
-            setBookshelfName(data.name || '');
+            setBookshelfName(data.shelfName || '');
         }
     }
 
@@ -66,8 +67,13 @@ export default function App() {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
-            body: JSON.stringify({ book: updatedBook, name: bookshelfName}),
+            body: JSON.stringify({ books: updatedBook, shelfName: bookshelfName}),
         });
+
+        if(result.ok) {
+            const data = await result.json();
+            setBooks(data.books || []);
+        }
     }
 
   return (

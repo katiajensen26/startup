@@ -5,24 +5,33 @@ const uuid = require('uuid');
 const app = express();
 const DB = require('./database.js');
 
+const authCookieName = 'token';
+
 const port = process.argv.length > 2 ? process.argv[2] : 3000;
 
 app.use(express.json());
 
-let apiRouter = express.Router();
 app.use(cookieParser());
-app.use('/api', apiRouter);
-
-const authCookieName = 'token';
 
 app.use(express.static('public'));
+
+let apiRouter = express.Router();
+app.use('/api', apiRouter);
+
 
 apiRouter.post('/auth/create', async (req, res) => {
     if (await findUser('email', req.body.email)) {
         res.status(409).send({ msg: 'Existing user' });
     } else {
         const user = await createUser(req.body.email, req.body.password);
-        bookshelfByUser[user.email] = { name: '', books: []};
+        
+        const startBookshelf = {
+            shelfName: 'My Bookshelf',
+            books: [],
+            isPublic: true,
+        };
+        await DB.createOrUpdateBookshelf(user, startBookshelf);
+
         setAuthCookie(res, user.token);
 
         res.send({ email: user.email });
@@ -93,7 +102,7 @@ apiRouter.put('/bookshelf', verifyAuth, async (req, res) => {
     }
 
     const bookshelfData = {
-        name: req.body.shelfName,
+        shelfName: req.body.shelfName,
         books: req.body.books,
         isPublic: req.body.isPublic,
     };

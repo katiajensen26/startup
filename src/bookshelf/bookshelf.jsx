@@ -5,15 +5,22 @@ import { Link } from 'react-router-dom';
 
 export function Bookshelf({ books, setBooks }) {
     const [bookshelfName, setBookshelfName] = React.useState('');
-    const [backgroundImage, setBackgroundImage] = React.useState('null');
+    const [backgroundImage, setBackgroundImage] = React.useState(null);
 
     async function handleSave() {
-        await fetch(`/api/bookshelf`, {
+        const savedBookshelf = await fetch(`/api/bookshelf`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
-            body: JSON.stringify({ name: bookshelfName, books }),
+            body: JSON.stringify({ shelfName: bookshelfName, books }),
         });
+
+        if (savedBookshelf.ok) {
+            const data = savedBookshelf.json();
+            setBooks(data.books || []);
+            setBookshelfName(data.shelfName || 'My Bookshelf');
+        }
+
     }
 
     function handleBookshelfTitle(event) {

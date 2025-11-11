@@ -43,7 +43,7 @@ async function getBookshelfbyShareId(shareID) {
 async function createOrUpdateBookshelf(user, bookshelfData) {
     const update = {
         $set: {
-            shelfName: bookshelfData.name || "My Bookshelf",
+            shelfName: bookshelfData.shelfName || "My Bookshelf",
             books: bookshelfData.books || [],
             isPublic: bookshelfData.isPublic ?? true
         },
