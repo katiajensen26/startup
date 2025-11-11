@@ -1,25 +1,20 @@
 import React from 'react';
 import './bookshelf.css';
 import { NavButton } from '../app';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export function Bookshelf({ books, setBooks }) {
+    const location = useLocation();
     const [bookshelfName, setBookshelfName] = React.useState('');
     const [backgroundImage, setBackgroundImage] = React.useState(null);
 
     async function handleSave() {
-        const savedBookshelf = await fetch(`/api/bookshelf`, {
+        await fetch(`/api/bookshelf`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
-            body: JSON.stringify({ shelfName: bookshelfName, books }),
+            body: JSON.stringify({ shelfName: bookshelfName }),
         });
-
-        if (savedBookshelf.ok) {
-            const data = savedBookshelf.json();
-            setBooks(data.books || []);
-            setBookshelfName(data.shelfName || 'My Bookshelf');
-        }
 
     }
 
@@ -36,7 +31,7 @@ export function Bookshelf({ books, setBooks }) {
             if (result.ok) {
                 const data = await result.json();
                 setBooks(data.books || []);
-                setBookshelfName(data.name || '');
+                setBookshelfName(data.shelfName || 'My Bookshelf');
             }
         }
         getBookshelf();

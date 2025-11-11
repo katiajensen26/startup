@@ -23,18 +23,20 @@ export default function App() {
     }, [books]);
 
     async function addBook(newBook) {
-        const result = await fetch(`api/bookshelf`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-            body: JSON.stringify({books: newBook, shelfName: bookshelfName}),
-        });
 
         setBooks(prevBook => {
             const index = prevBook.findIndex(b => b.id === newBook.id);
             const updatedShelf = [... prevBook];
             if (index !== -1) prevBook[index] = newBook;
             else updatedShelf.push(newBook);
+
+            fetch(`api/bookshelf`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({books: updatedShelf, shelfName: bookshelfName}),
+            });
+
             return updatedShelf;
         });
     }
@@ -63,17 +65,22 @@ export default function App() {
     }
 
     async function saveBook(updatedBook) {
-        const result = await fetch(`/api/bookshelf`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-            body: JSON.stringify({ books: updatedBook, shelfName: bookshelfName}),
-        });
+        setBooks(prevBooks => {
+            const index = prevBooks.findIndex(b => b.id === updatedBook.id);
+            const updatedShelf = [... prevBooks];
+            if (index !== -1) prevBooks[index] = updatedBook;
+            else updatedShelf.push(updatedBook);
 
-        if(result.ok) {
-            const data = await result.json();
-            setBooks(data.books || []);
-        }
+            fetch(`/api/bookshelf`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ books: updatedShelf, shelfName: bookshelfName}),
+            });
+
+            return updatedShelf;
+        })
+
     }
 
   return (
