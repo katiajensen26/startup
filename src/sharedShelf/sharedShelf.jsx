@@ -1,10 +1,11 @@
 import React from 'react';
-import './bookshelf.css';
+import '../bookshelf/bookshelf.css';
 import { useParams } from 'react-router-dom';
 
-export function sharedShelf({ bookshelf }) {
+export function SharedShelf() {
     const { shareID } = useParams();
-    const { bookshelfName, books, backgroundImage } = bookshelf;
+    const [bookshelf, setBookshelf] = React.useState({ shelfName: '', books: [] });
+    const [backgroundImage, setBackgroundImage] = React.useState('');
 
     React.useEffect(() => {
         async function getSharedBookshelf() {
@@ -12,6 +13,8 @@ export function sharedShelf({ bookshelf }) {
             if (res.ok) {
                 const data = await res.json();
                 setBookshelf(data || { shelfName: '', books: [] });
+            } else {
+                console.error('Failed to fetch shared bookshelf');
             }
         }
         getSharedBookshelf();
@@ -50,7 +53,7 @@ export function sharedShelf({ bookshelf }) {
             )}
 
             <div className="text-center">
-                <h2>{bookshelfName || "My Bookshelf"}</h2>
+                <h2>{bookshelf.shelfName || "My Bookshelf"}</h2>
             </div>
 
             <br />
@@ -69,7 +72,7 @@ export function sharedShelf({ bookshelf }) {
                 const shelfPositions = [100, 400, 700];
                 const maxBooks = Math.floor(700 / (bookWidth + spacing));
 
-                return books.map((book, index) => {
+                return bookshelf.books.map((book, index) => {
                     const shelfIndex = Math.floor(index / maxBooks);
 
 

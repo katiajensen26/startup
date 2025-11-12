@@ -8,7 +8,7 @@ export function Friends() {
     event.preventDefault();
 
     if (friendURL) {
-      window.open(friendURL, '_blank');
+      window.open(friendURL.trim(), '_blank');
     }
   }
 
