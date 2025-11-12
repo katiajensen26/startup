@@ -104,7 +104,7 @@ apiRouter.put('/bookshelf', verifyAuth, async (req, res) => {
 
     const bookshelfData = {
         shelfName: req.body.shelfName,
-        books: Array.isArray(req.body.books),
+        books: Array.isArray(req.body.books) ? req.body.books : [],
         isPublic: req.body.isPublic,
     };
 
