@@ -9,7 +9,7 @@ import { Bookshelf } from './bookshelf/bookshelf';
 import { Friends } from './friends/friends';
 import { Customize } from './customize/customize';
 import { AuthState } from './login/authState';
-import { sharedShelf } from './sharedShelf/sharedShelf';
+import { SharedShelf } from './sharedShelf/sharedShelf';
 
 export default function App() {
     const [userName, setUsername] = React.useState(localStorage.getItem('userName'));
@@ -132,7 +132,7 @@ export default function App() {
                 <Route path='/bookshelf' element={<Bookshelf books={books} deleteBook={deleteBook} setBooks={setBooks}/>} />
                 <Route path='/customize' element={<Customize books={books} setBooks={setBooks} addBook={addBook} deleteBook={deleteBook} saveBook={saveBook}/>} />
                 <Route path='/friends' element={<Friends />} />
-                <Route path='/bookshelf/share/:shareID' element={<sharedShelf bookshelf={{ bookshelfName, books }} />} />
+                <Route path='/bookshelf/share/:shareID' element={<SharedShelf />} />
                 <Route path='*' element={<NotFound />} />
             </Routes>
 
