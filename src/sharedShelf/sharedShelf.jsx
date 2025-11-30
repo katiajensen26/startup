@@ -1,7 +1,7 @@
 import React from 'react';
 import '../bookshelf/bookshelf.css';
 import { useParams } from 'react-router-dom';
-import { shelfNotifier } from '../shelfNotifier';
+import { shelfNotifier } from './shelfNotifier';
 
 export function SharedShelf() {
     const { shareID } = useParams();
