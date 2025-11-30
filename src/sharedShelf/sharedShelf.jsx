@@ -1,6 +1,7 @@
 import React from 'react';
 import '../bookshelf/bookshelf.css';
 import { useParams } from 'react-router-dom';
+import { shelfNotifier } from '../shelfNotifier';
 
 export function SharedShelf() {
     const { shareID } = useParams();
@@ -18,6 +19,20 @@ export function SharedShelf() {
             }
         }
         getSharedBookshelf();
+    }, [shareID]);
+
+    React.useEffect(() => {
+                const notifier = new shelfNotifier(shareID);
+
+        notifier.addHandler((event) => {
+            if (event.type === 'updateBookshelf') {
+                setBookshelf(event.data);
+            }
+        });
+
+        return () => {
+            notifier.socket.close();
+        };
     }, [shareID]);
 
     function fitFontSize(text, font, maxWidth, baseSize = 80) {
