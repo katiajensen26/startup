@@ -12,7 +12,7 @@ class shelfNotifier {
         this.socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws/shelf/${shareId}`);
 
         this.socket.onopen = () => {
-            console.log('WebSocket connection successfull.');
+            console.log('WebSocket connection successful.');
         };
 
         this.socket.onclose = () => {
@@ -20,10 +20,10 @@ class shelfNotifier {
         };
         
         this.socket.onmessage = async (msg) => {
-        try {
-            const event = JSON.parse(await msg.data);
-            this.receiveEvent(event);
-        } catch {}
+            try {
+                const event = JSON.parse(await msg.data);
+                this.receiveEvent(event);
+            } catch {}
         };
     }
 
