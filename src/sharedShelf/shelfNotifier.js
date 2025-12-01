@@ -9,7 +9,7 @@ class shelfNotifier {
         const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
 
 
-        this.socket = new WebSocket(`${protocol}://localhost:4000/ws/shelf/${shareId}`);
+        this.socket = new WebSocket(`${protocol}://${window.location.hostname}:${port}/ws/shelf/${shareId}`);
 
         this.socket.onopen = () => {
             console.log('WebSocket connection successfull.');
@@ -21,7 +21,7 @@ class shelfNotifier {
         
         this.socket.onmessage = async (msg) => {
         try {
-            const event = JSON.parse(await msg.data.text());
+            const event = JSON.parse(await msg.data);
             this.receiveEvent(event);
         } catch {}
         };
