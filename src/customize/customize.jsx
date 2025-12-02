@@ -79,10 +79,9 @@ export function Customize({ books, deleteBook, setBooks, addBook, saveBook, book
             );
             setBooks(updatedBooks);
 
-            if (saveBook) await saveBook(newBook, bookshelfName);
-        } 
-        else {
-            if (addBook) await addBook(newBook, bookshelfName);
+            if (saveBook) await saveBook(newBook);
+        } else {
+            if (addBook) await addBook(newBook);
         }
         navigate('/bookshelf');
     }

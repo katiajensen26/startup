@@ -23,7 +23,8 @@ export default function App() {
         localStorage.setItem('bookshelf', JSON.stringify(books));
     }, [books]);
 
-    async function addBook(newBook, shelfNameOverride) {
+    async function addBook(newBook) {
+
         setBooks(prevBook => {
             const index = prevBook.findIndex(b => b.id === newBook.id);
             const updatedShelf = [... prevBook];
@@ -34,7 +35,7 @@ export default function App() {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
-                body: JSON.stringify({books: updatedShelf, shelfName: shelfNameOverride || bookshelfName}),
+                body: JSON.stringify({books: updatedShelf, shelfName: bookshelfName}),
             });
 
             return updatedShelf;
@@ -75,7 +76,7 @@ export default function App() {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
-                body: JSON.stringify({ books: updatedShelf, shelfName: shelfNameOverride || bookshelfName }),
+                body: JSON.stringify({ books: updatedShelf, shelfName: bookshelfName}),
             });
 
             return updatedShelf;
