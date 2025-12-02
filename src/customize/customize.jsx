@@ -3,7 +3,7 @@ import './customize.css';
 import { NavButton } from '../app';
 import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
 
-export function Customize({ books, deleteBook, setBooks, addBook, saveBook }) {
+export function Customize({ books, deleteBook, setBooks, addBook, saveBook, bookshelfName }) {
     const bookLocation = useLocation();
     const navigate = useNavigate();
     const bookIndex = bookLocation.state?.bookIndex;
@@ -79,10 +79,10 @@ export function Customize({ books, deleteBook, setBooks, addBook, saveBook }) {
             );
             setBooks(updatedBooks);
 
-            if (saveBook) await saveBook(newBook);
+            if (saveBook) await saveBook(newBook, bookshelfName);
         } 
         else {
-            if (addBook) await addBook(newBook);
+            if (addBook) await addBook(newBook, bookshelfName);
         }
         navigate('/bookshelf');
     }

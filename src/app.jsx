@@ -23,7 +23,7 @@ export default function App() {
         localStorage.setItem('bookshelf', JSON.stringify(books));
     }, [books]);
 
-    async function addBook(newBook) {
+    async function addBook(newBook, shelfNameOverride) {
         setBooks(prevBook => {
             const index = prevBook.findIndex(b => b.id === newBook.id);
             const updatedShelf = [... prevBook];
@@ -34,7 +34,7 @@ export default function App() {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
-                body: JSON.stringify({books: updatedShelf, shelfName: shelfName}),
+                body: JSON.stringify({books: updatedShelf, shelfName: shelfNameOverride || bookshelfName}),
             });
 
             return updatedShelf;
@@ -64,7 +64,7 @@ export default function App() {
         }
     }
 
-    async function saveBook(updatedBook) {
+    async function saveBook(updatedBook, shelfNameOverride) {
         setBooks(prevBooks => {
             const index = prevBooks.findIndex(b => b.id === updatedBook.id);
             const updatedShelf = [... prevBooks];
@@ -75,7 +75,7 @@ export default function App() {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
-                body: JSON.stringify({ books: updatedShelf, shelfName: shelfName}),
+                body: JSON.stringify({ books: updatedShelf, shelfName: shelfNameOverride || bookshelfName }),
             });
 
             return updatedShelf;
@@ -128,8 +128,8 @@ export default function App() {
                     }}
                     />
                 } />
-                <Route path='/bookshelf' element={<Bookshelf books={books} deleteBook={deleteBook} setBooks={setBooks}/>} />
-                <Route path='/customize' element={<Customize books={books} setBooks={setBooks} addBook={addBook} deleteBook={deleteBook} saveBook={saveBook}/>} />
+                <Route path='/bookshelf' element={<Bookshelf books={books} deleteBook={deleteBook} setBooks={setBooks} bookshelfName={bookshelfName} />} />
+                <Route path='/customize' element={<Customize books={books} setBooks={setBooks} addBook={addBook} deleteBook={deleteBook} saveBook={saveBook} bookshelfName={bookshelfName} />} />
                 <Route path='/friends' element={<Friends />} />
                 <Route path='/bookshelf/share/:shareID' element={<SharedShelf />} />
                 <Route path='*' element={<NotFound />} />
