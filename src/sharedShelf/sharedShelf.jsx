@@ -22,13 +22,12 @@ export function SharedShelf() {
     }, [shareID]);
 
     React.useEffect(() => {
-        const notifier = new shelfNotifier(shareID);
+                const notifier = new shelfNotifier(shareID);
 
         notifier.addHandler((event) => {
             if (event.type === 'updateBookshelf') {
                 setBookshelf(event.data);
             }
-
         });
 
         return () => {
