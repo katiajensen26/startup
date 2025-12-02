@@ -80,7 +80,8 @@ export function Customize({ books, deleteBook, setBooks, addBook, saveBook }) {
             setBooks(updatedBooks);
 
             if (saveBook) await saveBook(newBook);
-        } else {
+        } 
+        else {
             if (addBook) await addBook(newBook);
         }
         navigate('/bookshelf');

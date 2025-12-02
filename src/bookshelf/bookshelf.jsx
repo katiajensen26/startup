@@ -13,9 +13,8 @@ export function Bookshelf({ books, setBooks }) {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
-            body: JSON.stringify({ shelfName: bookshelfName }),
+            body: JSON.stringify({ shelfName: bookshelfName, books: books, isPublic: true}),
         });
-
     }
 
     function handleBookshelfTitle(event) {

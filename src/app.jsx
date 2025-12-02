@@ -24,7 +24,6 @@ export default function App() {
     }, [books]);
 
     async function addBook(newBook) {
-
         setBooks(prevBook => {
             const index = prevBook.findIndex(b => b.id === newBook.id);
             const updatedShelf = [... prevBook];
@@ -35,7 +34,7 @@ export default function App() {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
-                body: JSON.stringify({books: updatedShelf, shelfName: bookshelfName}),
+                body: JSON.stringify({books: updatedShelf, shelfName: shelfName}),
             });
 
             return updatedShelf;
@@ -76,7 +75,7 @@ export default function App() {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
-                body: JSON.stringify({ books: updatedShelf, shelfName: bookshelfName}),
+                body: JSON.stringify({ books: updatedShelf, shelfName: shelfName}),
             });
 
             return updatedShelf;
