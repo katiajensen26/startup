@@ -87,7 +87,7 @@ apiRouter.post('/bookshelf', verifyAuth, async (req, res) => {
     const user = await findUser('token', req.cookies[authCookieName]);
     const currentBookshelf = await updateBookshelf(user, req.body);
 
-    broadcastToShelf(user.shareId, currentBookshelf);
+    broadcastToShelf(currentBookshelf.shareID, currentBookshelf);
     res.send(currentBookshelf);
 });
 
@@ -96,7 +96,7 @@ apiRouter.delete('/bookshelf', verifyAuth, async (req, res) => {
     const user = await findUser('token', req.cookies['token']);
     const currentBookshelf = await deleteFromBookshelf(user, req.body);
 
-    broadcastToShelf(user.shareId, currentBookshelf);
+    broadcastToShelf(currentBookshelf.shareID, currentBookshelf);
     
     res.send(currentBookshelf);
 })
@@ -117,7 +117,8 @@ apiRouter.put('/bookshelf', verifyAuth, async (req, res) => {
     await DB.createOrUpdateBookshelf(user, bookshelfData);
     const updatedShelf = await DB.getBookshelfByUser(user);
 
-    broadcastToShelf(user.shareId, updatedShelf);
+    console.log("Broadcasting update to shelf ID:", updatedShelf.shareID);
+    broadcastToShelf(updatedShelf.shareID, updatedShelf);
 
     res.send(updatedShelf);
 

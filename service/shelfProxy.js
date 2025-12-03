@@ -34,7 +34,7 @@ function shelfProxy(httpServer) {
 
 
     function broadcastToShelf(shareId, message) {
-        const msg = JSON.stringify({ type: 'updateShelf', data: message });
+        const msg = JSON.stringify({ type: 'updateBookshelf', data: message });
         socketServer.clients.forEach(client => {
             if (client.readyState === WebSocket.OPEN && client.shareId === shareId) {
                 client.send(msg);
@@ -42,7 +42,7 @@ function shelfProxy(httpServer) {
         });
     }
 
-    return ( socketServer, broadcastToShelf );
+    return { socketServer, broadcastToShelf };
 
 }
 
