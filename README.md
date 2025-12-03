@@ -139,8 +139,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
-- [ ] **Application is fully functional** - I did not complete this part of the deliverable.
+- [x] **Backend listens for WebSocket connection** - Backend receives the websocket connection.
+- [x] **Frontend makes WebSocket connection** - Frontend receives messages from the backend.
+- [x] **Data sent over WebSocket connection** - Bookshelf is updated when the owner updates it.
+- [x] **WebSocket data displayed** - You can see the updated bookshelf immediately.
+- [x] **Application is fully functional** - It works for the most part. It only works if the person who is editing the bookshelf is the last person who logged in.
