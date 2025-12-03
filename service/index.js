@@ -37,6 +37,7 @@ apiRouter.post('/auth/create', async (req, res) => {
 
         res.send({ email: user.email });
     }
+
 });
 
 apiRouter.post('/auth/login', async (req, res) => {
@@ -68,23 +69,28 @@ apiRouter.delete('/auth/logout', async (req, res) => {
 
 const verifyAuth = async (req, res, next) => {
     const user = await findUser('token', req.cookies['token']);
-    if (user) {
-        next();
-    } else {
-        res.status(401).send({ msg: 'Unauthorized' });
+
+    if (!user) {
+        res.status(401).send({ msg: 'unauthorized' });
+        return;
     }
+
+    req.user = user;
+    next();
 };
 
 //Gets user-specific bookshelf for authenticated user
 apiRouter.get('/bookshelf', verifyAuth, async (req, res) => {
-    const user = await findUser('token', req.cookies[authCookieName]);
+    // const user = await findUser('token', req.cookies[authCookieName]);
+    const user = req.user;
     const currentBookshelf = await DB.getBookshelfByUser(user);
     res.send(currentBookshelf || { shelfName: '', books: [] });
 });
 
 //Stores bookshelf for authenticated user
 apiRouter.post('/bookshelf', verifyAuth, async (req, res) => {
-    const user = await findUser('token', req.cookies[authCookieName]);
+            // const user = await findUser('token', req.cookies[authCookieName]);
+    const user = req.user;
     const currentBookshelf = await updateBookshelf(user, req.body);
 
     broadcastToShelf(currentBookshelf.shareID, currentBookshelf);
@@ -102,7 +108,8 @@ apiRouter.delete('/bookshelf', verifyAuth, async (req, res) => {
 })
 
 apiRouter.put('/bookshelf', verifyAuth, async (req, res) => {
-    const user = await findUser('token', req.cookies[authCookieName]);
+    // const user = await findUser('token', req.cookies[authCookieName]);
+    const user = req.user;
     if (!user) {
         res.status(401).send({ msg: 'unauthorized'});
     }
