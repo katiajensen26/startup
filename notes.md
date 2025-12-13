@@ -214,3 +214,43 @@ Different Ports:
 161 - Simple Network Management Protocol (SNMP) for managing network devices such as routers or printers
 194 - Internet Relay Chat (IRC) for chatting
 443 - HTTP secure (HTTPS) for secure web requests
+
+
+## Final Notes
+
+vite.config.js - lists configurations for debugging and building with vite
+
+200-299 - Success message
+300-399 - redirections messages
+400-499 - Client error
+500-599 - Server error
+
+
+Http header content-type allows you to specify the type of the request body
+"Secure cookie"/"Http-only cookie"/"Same-site cookie" keeps the client from being able to alter the cookie and cookie theft
+
+User passwords should be stored hashed or encrypted. They should not be stored as plain text.
+
+Websocket protocol is intended to provide two-way communication between users in real-time.
+
+JSX - JavaScript XML
+JS - JavaScript
+AWS - Amazon Web Services
+NPM - Node Package Manager
+NVM - Node Version Manager
+
+React.useState allows you to declare, update and manage the state of a variable and when it's updated, it re-renders and displays the new component
+
+React Hooks are functions that allow developers to use state, lifecycle features and other powerful React capabilities within functional components (useState, useEffect, useContext, etc.)
+
+State Hooks - Lets a component "remember" information like user input. Uses state to store an input value.
+Context Hooks - lets a component receive information from distant parents without passing it as props.
+Ref Hooks - lets a component hold some information that isn't used for rendering. Updating a ref doesn't re-render your component. Useful for when you need to work with non-React systems
+Effect Hooks - lets a component connect to and synchronize with external systems. This includes  dealing with network, browser DOM, animations, widgets written using a different UI library, and other non-React code.
+Performance Hooks - A common way to optimize re-rendering performance is to skip uneccessary work. - useMemo lets you cache the result of an expensive calculation. useCallback lets you cache a function definition before passing it down to an optimized component.
+
+package.json outlines essential metadata, manages dependences, and defines scripts. Generally used for Node.js.
+fetch() makes asynchronous network request to retrieve resources from a server.
+Node.js allows developers to execute JavaScript code outside of a web browser for more server-side development.
+pm2 is what helps manage your website servers and allows you to deploy your website
+Vite allows you to debug and see your website and server before deploying it to your environment.
